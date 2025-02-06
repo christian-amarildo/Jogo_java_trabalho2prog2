@@ -1,3 +1,5 @@
+import java.util.List;
+
 // A classe Monster representa um monstro que herda as propriedades e comportamentos de um jogador (Player).
 // Ela possui atributos adicionais como tipo e dificuldade, e um método de Inteligência Artificial.
 public class Monster extends Player {
