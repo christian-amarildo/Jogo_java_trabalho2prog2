@@ -140,7 +140,7 @@ public class Game {
         System.out.println("\nBem-vindo à loja!");
         System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
         System.out.println("Você pode comprar itens aqui.");
-        System.out.println("1. Poção de Cura - 30 moedas (Recupera 30 de vida)");
+        System.out.println("1. Poção de Cura - 30 moedas (Recupera 50 de vida)");
         System.out.println("2. Espada - 200 moedas (Aumenta o ataque em 20)");
         System.out.println("3. Espada Melhorada - 300 moedas (Aumenta o ataque em 30)");
         System.out.println("4. Armadura - 250 moedas (Aumenta a defesa em 15)");
