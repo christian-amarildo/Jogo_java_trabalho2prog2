@@ -30,10 +30,10 @@ public class Game {
                 dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
                 break;
             case 2:
-                dificuldade = new Dificuldade("Médio", 1.5f, 1.2f, 5, 2);
+                dificuldade = new Dificuldade("Médio", 1.2f, 1.2f, 5, 2);
                 break;
             case 3:
-                dificuldade = new Dificuldade("Difícil", 2.0f, 1.5f, 7, 3);
+                dificuldade = new Dificuldade("Difícil", 1.5f, 1.5f, 7, 3);
                 break;
             default:
                 dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
@@ -43,32 +43,75 @@ public class Game {
 
     public void escolherHeroi() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Escolha o tipo de herói: (1) Guerreiro (2) Mago (3) Arqueiro (4) Furtivo");
+
+        // Apresentando informações detalhadas sobre cada herói
+        System.out.println("Escolha o tipo de herói:");
+
+        // Exibindo informações sobre cada classe de herói
+        System.out.println("(1) Guerreiro - Alta vida e boa defesa, forte no combate corpo a corpo.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 110, Força de Ataque: 20, Defesa: 10, Destreza: 10, Velocidade: 8");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere combate direto e resistência.");
+
+        System.out.println("(2) Mago - Alta destreza e forte no ataque à distância, mas com menos vida e defesa.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 80, Força de Ataque: 25, Defesa: 5, Destreza: 15, Velocidade: 10");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere atacar de longe com alta potência.");
+
+        System.out.println("(3) Arqueiro - Boa destreza e alta velocidade, pode atacar à distância com precisão.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 90, Força de Ataque: 18, Defesa: 10, Destreza: 20, Velocidade: 12");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere agilidade e ataques de precisão à distância.");
+
+        System.out.println("(4) Furtivo - Alta velocidade e destreza, ideal para ataques rápidos e furtivos.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 100, Força de Ataque: 22, Defesa: 8, Destreza: 18, Velocidade: 14");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere furtividade e ataques rápidos com alta agilidade.");
+        System.out.println(".");
+        System.out.println(" escolha o heroi digitando um número de 1 a 4:");
+
+        // Solicitando a escolha do herói
         int escolha = scanner.nextInt();
+        while (escolha < 1 || escolha > 4) {  // Verificação de entrada
+            System.out.println("Escolha inválida! Digite um número entre 1 e 4.");
+            escolha = scanner.nextInt();
+        }
+
+        // Definindo a habilidade do herói
         Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
 
+        // Criando o herói baseado na escolha
         switch (escolha) {
             case 1:
-                jogador = new Guerreiro("Tharos", 110, 20, 3, 10, 8, "Guerreiro", habilidadeHeroi, 100);
+                jogador = new Guerreiro("Tharos", 110, 20, 10, 10, 8, "Guerreiro", habilidadeHeroi, 100);
                 break;
             case 2:
-                jogador = new Mago("Elaria", 80, 25, 2, 2, 10, "Mago", habilidadeHeroi, 150);
+                jogador = new Mago("Elaria", 80, 25, 5, 15, 10, "Mago", habilidadeHeroi, 150);
                 break;
             case 3:
-                jogador = new Arqueiro("Lian", 90, 18, 2, 2, 12, "Arqueiro", habilidadeHeroi, 110);
+                jogador = new Arqueiro("Lian", 90, 18, 10, 20, 12, "Arqueiro", habilidadeHeroi, 110);
                 break;
             case 4:
-                jogador = new Furtivo("Silas", 100, 22, 1, 8, 14, "Furtivo", habilidadeHeroi, 120);
-                break;
-            default:
-                jogador = new Guerreiro("Tharos", 110, 20, 1, 10, 8, "Guerreiro", habilidadeHeroi, 100);
+                jogador = new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120);
                 break;
         }
 
         // Passa o Log para o herói
         jogador.setLog(log);
 
-        System.out.println("Você escolheu o herói: " + jogador.getNome() + " com " + jogador.getDinheiro() + " moedas.");
+        // Exibe as informações do herói escolhido
+        System.out.println("Você escolheu o herói: " + jogador.getNome());
+        System.out.println("Características do " + jogador.getNome() + ":");
+        System.out.println("   - Vida: " + jogador.getHp());
+        System.out.println("   - Força de Ataque: " + jogador.getForcaAtaque());
+        System.out.println("   - Defesa: " + jogador.getDefesa());
+        System.out.println("   - Destreza: " + jogador.getDestreza());
+        System.out.println("   - Velocidade: " + jogador.getVelocidade());
+        System.out.println("Com " + jogador.getDinheiro() + " moedas.");
     }
 
     public void inicializarMonstros() {
