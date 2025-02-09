@@ -14,17 +14,23 @@ public class Game {
     private Dificuldade dificuldade;
     private Inventario inventario;
     private Hero jogador;
+    private Scanner scanner;
 
     public Game() {
         log = new Log();
         ui = new InterfaceUsuario();
         inventario = new Inventario();
+        scanner = new Scanner(System.in);  // Inicializado uma vez aqui
     }
 
     public void escolherDificuldade() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Escolha a dificuldade: (1) Fácil (2) Médio (3) Difícil");
         int escolha = scanner.nextInt();
+        while (escolha < 1 || escolha > 3) {  // Verificação de entrada
+            System.out.println("Escolha inválida! Digite um número entre 1 e 3.");
+            escolha = scanner.nextInt();
+        }
+
         switch (escolha) {
             case 1:
                 dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3);
@@ -35,18 +41,51 @@ public class Game {
             case 3:
                 dificuldade = new Dificuldade("Difícil", 2.0f, 1.5f, 7);
                 break;
-            default:
-                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3);
-                break;
         }
     }
 
     public void escolherHeroi() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escolha o tipo de herói: (1) Guerreiro (2) Mago (3) Arqueiro (4) Furtivo");
+        // Apresentando informações detalhadas sobre cada herói
+        System.out.println("Escolha o tipo de herói:");
+
+        // Exibindo informações sobre cada classe de herói
+        System.out.println("(1) Guerreiro - Alta vida e boa defesa, forte no combate corpo a corpo.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 110, Força de Ataque: 20, Defesa: 10, Destreza: 10, Velocidade: 8");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere combate direto e resistência.");
+
+        System.out.println("(2) Mago - Alta destreza e forte no ataque à distância, mas com menos vida e defesa.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 80, Força de Ataque: 25, Defesa: 5, Destreza: 15, Velocidade: 10");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere atacar de longe com alta potência.");
+
+        System.out.println("(3) Arqueiro - Boa destreza e alta velocidade, pode atacar à distância com precisão.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 90, Força de Ataque: 18, Defesa: 10, Destreza: 20, Velocidade: 12");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere agilidade e ataques de precisão à distância.");
+
+        System.out.println("(4) Furtivo - Alta velocidade e destreza, ideal para ataques rápidos e furtivos.");
+        System.out.println("   Características:");
+        System.out.println("   - Vida: 100, Força de Ataque: 22, Defesa: 8, Destreza: 18, Velocidade: 14");
+        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
+        System.out.println("   - Estilo: Ideal para quem prefere furtividade e ataques rápidos com alta agilidade.");
+        System.out.println(".");
+        System.out.println(" escolha o heroi digitando um número de 1 a 4:");
+
+        // Solicitando a escolha do herói
         int escolha = scanner.nextInt();
+        while (escolha < 1 || escolha > 4) {  // Verificação de entrada
+            System.out.println("Escolha inválida! Digite um número entre 1 e 4.");
+            escolha = scanner.nextInt();
+        }
+
+        // Definindo a habilidade do herói
         Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
 
+        // Criando o herói baseado na escolha
         switch (escolha) {
             case 1:
                 jogador = new Guerreiro("Tharos", 110, 20, 10, 10, 8, "Guerreiro", habilidadeHeroi, 100);
@@ -60,15 +99,20 @@ public class Game {
             case 4:
                 jogador = new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120);
                 break;
-            default:
-                jogador = new Guerreiro("Tharos", 110, 20, 15, 10, 8, "Guerreiro", habilidadeHeroi, 100);
-                break;
         }
 
         // Passa o Log para o herói
         jogador.setLog(log);
 
-        System.out.println("Você escolheu o herói: " + jogador.getNome() + " com " + jogador.getDinheiro() + " moedas.");
+        // Exibe as informações do herói escolhido
+        System.out.println("Você escolheu o herói: " + jogador.getNome());
+        System.out.println("Características do " + jogador.getNome() + ":");
+        System.out.println("   - Vida: " + jogador.getHp());
+        System.out.println("   - Força de Ataque: " + jogador.getForcaAtaque());
+        System.out.println("   - Defesa: " + jogador.getDefesa());
+        System.out.println("   - Destreza: " + jogador.getDestreza());
+        System.out.println("   - Velocidade: " + jogador.getVelocidade());
+        System.out.println("Com " + jogador.getDinheiro() + " moedas.");
     }
 
     public void inicializarMonstros() {
@@ -78,7 +122,6 @@ public class Game {
     }
 
     public void interagir() {
-        Scanner scanner = new Scanner(System.in);
         boolean jogoAtivo = true;
 
         while (jogoAtivo) {
@@ -89,6 +132,11 @@ public class Game {
             System.out.println("3. Lutar contra o Leviatan");
             System.out.println("4. Sair");
             int escolha = scanner.nextInt();
+
+            while (escolha < 1 || escolha > 4) {  // Verificação de entrada
+                System.out.println("Opção inválida! Digite um número entre 1 e 4.");
+                escolha = scanner.nextInt();
+            }
 
             switch (escolha) {
                 case 1:
@@ -104,8 +152,6 @@ public class Game {
                     jogoAtivo = false;
                     System.out.println("Você saiu do jogo.");
                     break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
@@ -114,9 +160,16 @@ public class Game {
         System.out.println("\nVocê entrou na Dungeon!");
         System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
         System.out.println("Monstros disponíveis: Slime, Esqueleto.");
-        Monster monstroEscolhido = monstros.get(new Random().nextInt(2)); // Slime ou Esqueleto
+
+        Random random = new Random();
+        Monster monstroEscolhido = monstros.get(random.nextInt(2)); // Slime ou Esqueleto
+        System.out.println("Você encontrou um " + monstroEscolhido.getNome() + "!");
+        System.out.println("Vida do " + monstroEscolhido.getNome() + ": " + monstroEscolhido.getHp());
+
+        mostrarLogs();  // Exibe os logs antes da batalha iniciar
         lutarContraMonstro(monstroEscolhido);
     }
+
 
     public void irLoja() {
         System.out.println("\nBem-vindo à loja!");
@@ -128,8 +181,12 @@ public class Game {
         System.out.println("4. Armadura - 250 moedas (Aumenta a defesa em 15)");
         System.out.println("Digite o número do item que deseja comprar:");
 
-        Scanner scanner = new Scanner(System.in);
         int escolhaLoja = scanner.nextInt();
+
+        while (escolhaLoja < 1 || escolhaLoja > 4) {  // Verificação de entrada para loja
+            System.out.println("Opção inválida! Digite um número entre 1 e 4.");
+            escolhaLoja = scanner.nextInt();
+        }
 
         switch (escolhaLoja) {
             case 1:
@@ -171,8 +228,6 @@ public class Game {
                     System.out.println("Você não tem dinheiro suficiente para comprar a Armadura.");
                 }
                 break;
-            default:
-                System.out.println("Opção inválida.");
         }
     }
 
@@ -184,14 +239,17 @@ public class Game {
     }
 
     public void lutarContraMonstro(Monster monstro) {
-        log.adicionarLog("Você está lutando contra " + monstro.getNome() + "!");
+        log.adicionarLog("A batalha contra " + monstro.getNome() + " começou!");
+        mostrarLogs();  // Exibe logs no início da batalha
 
         while (jogador.getHp() > 0 && monstro.getHp() > 0) {
-            // Mostra a vida do herói e do monstro
-            log.adicionarLog("\nVida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-            log.adicionarLog("Vida do Monstro (" + monstro.getNome() + "): " + monstro.getHp());
+            // Exibindo status de vida antes de cada rodada de combate
+            log.adicionarLog("\n** Status Atual **");
+            log.adicionarLog("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
+            log.adicionarLog("Vida do " + monstro.getNome() + ": " + monstro.getHp());
+            mostrarLogs();  // Exibe o status antes de cada rodada
 
-            // Herói ataca
+            // Ação do herói
             log.adicionarLog(jogador.getNome() + " ataca " + monstro.getNome() + "!");
             ResultadoAtaque resultado = jogador.realizarAtaque(monstro);
             switch (resultado) {
@@ -199,16 +257,17 @@ public class Game {
                     log.adicionarLog("O ataque acertou!");
                     break;
                 case CRITICAL_HIT:
-                    log.adicionarLog("Golpe crítico!");
+                    log.adicionarLog("Golpe crítico! Causou dano massivo!");
                     break;
                 case ERROU:
-                    log.adicionarLog("O ataque errou!");
+                    log.adicionarLog("O ataque errou! O " + monstro.getNome() + " se esquivou!");
                     break;
             }
+            mostrarLogs();  // Exibe os resultados do ataque do herói
 
             // Verifica se o monstro ainda está vivo
             if (monstro.getHp() > 0) {
-                // Monstro ataca
+                // Ação do monstro
                 log.adicionarLog(monstro.getNome() + " ataca " + jogador.getNome() + "!");
                 ResultadoAtaque resultadoMonstro = monstro.realizarAtaque(jogador);
                 switch (resultadoMonstro) {
@@ -216,20 +275,21 @@ public class Game {
                         log.adicionarLog("O ataque do monstro acertou!");
                         break;
                     case CRITICAL_HIT:
-                        log.adicionarLog("Golpe crítico do monstro!");
+                        log.adicionarLog("Golpe crítico do monstro! Causou dano severo!");
                         break;
                     case ERROU:
-                        log.adicionarLog("O ataque do monstro errou!");
+                        log.adicionarLog("O ataque do monstro errou! Você se esquivou!");
                         break;
                 }
+                mostrarLogs();  // Exibe os resultados do ataque do monstro
             }
         }
 
-        // Resultado da batalha
+        // Resultado final da batalha
         if (jogador.getHp() > 0) {
             log.adicionarLog("Você venceu " + monstro.getNome() + "!");
             // Adiciona o dinheiro dropado pelo monstro ao jogador
-            jogador.gastarDinheiro(-monstro.getDinheiroDropado()); // Usa negativo para adicionar dinheiro
+            jogador.adicionarDinheiro(monstro.getDinheiroDropado());
             log.adicionarLog("Você ganhou " + monstro.getDinheiroDropado() + " moedas!");
         } else {
             log.adicionarLog("Você foi derrotado por " + monstro.getNome() + "!");
@@ -237,6 +297,12 @@ public class Game {
 
         // Exibe todos os logs da batalha
         log.exibirEventos();
+    }
+
+    private void mostrarLogs() {
+        System.out.println("Pressione Enter para continuar...");
+        scanner.nextLine();  // Aguarda a entrada do jogador antes de continuar
+        log.exibirEventos();  // Exibe os logs registrados até o momento
     }
 
     public static void main(String[] args) {

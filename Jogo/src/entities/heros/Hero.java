@@ -38,11 +38,11 @@ public abstract class Hero extends Player {
         System.out.println(this.nome + " recuperou " + quantidade + " de vida. Vida atual: " + this.hp);
     }
 
-
     public int getDinheiro() {
         return dinheiro;
     }
 
+    // Método para gastar dinheiro (já existente)
     public void gastarDinheiro(int valor) {
         if (dinheiro >= valor) {
             dinheiro -= valor;
@@ -50,6 +50,12 @@ public abstract class Hero extends Player {
         } else {
             System.out.println("Dinheiro insuficiente.");
         }
+    }
+
+    // Método para adicionar dinheiro
+    public void adicionarDinheiro(int valor) {
+        this.dinheiro += valor;  // Adiciona o valor ao saldo de dinheiro
+        System.out.println("Você ganhou " + valor + " moedas! Dinheiro atual: " + this.dinheiro);
     }
 
     public String getClasse() {
