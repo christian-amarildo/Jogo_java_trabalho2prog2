@@ -15,20 +15,20 @@ public abstract class Monster extends Player {
             case 1:
                 break;
             case 2:
-                hp *= 1.2;
-                forcaAtaque *= 1.2;
-                defesa *= 1.2;
-                destreza *= 1.2;
-                velocidade *= 1.2;
-                dinheiroDropado *= 1.4;
+                hp = (int) Math.ceil(hp * 1.2);
+                forcaAtaque = (int) Math.ceil(forcaAtaque * 1.2);
+                defesa = (int) Math.ceil(defesa * 1.2);
+                destreza = (int) Math.ceil(destreza * 1.2);
+                velocidade = (int) Math.ceil(velocidade * 1.2);
+                dinheiroDropado = (int) Math.ceil(dinheiroDropado * 1.5);
                 break;
             case 3:
-                hp *= 1.4;
-                forcaAtaque *= 1.5;
-                defesa *= 1.5;
-                destreza *= 1.5;
-                velocidade *= 1.5;
-                dinheiroDropado *= 1.8;
+            hp = (int) Math.ceil(hp * 1.4);
+            forcaAtaque = (int) Math.ceil(forcaAtaque * 1.5);
+            defesa = (int) Math.ceil(defesa * 1.5);
+            destreza = (int) Math.ceil(destreza * 1.5);
+            velocidade = (int) Math.ceil(velocidade * 1.5);
+            dinheiroDropado = (int) Math.ceil(dinheiroDropado * 1.8);
                 break;
             default:
                 System.out.println("Valor inválido!");
