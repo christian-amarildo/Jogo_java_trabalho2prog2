@@ -15,6 +15,8 @@ public class Guerreiro extends Hero {
             int bonus = arma.getBonusAtaque();
             if (arma.getNome().equals("Espada")) {
                 bonus += 5; // Bônus adicional para guerreiros com espadas
+            } else if(arma.getNome().equals("Espada Melhorada")){
+                bonus += 7;
             }
             this.forcaAtaque += bonus; // Usando forcaAtaque
             System.out.println("Você equipou " + arma.getNome() + "! Força de ataque aumentada para " + this.forcaAtaque + ".");
@@ -28,7 +30,7 @@ public class Guerreiro extends Hero {
         double chanceAcerto = Math.random() * 100;
 
         if (chanceAcerto <= this.destreza) {
-            int dano = this.forcaAtaque - alvo.getDefesa();
+            int dano = this.forcaAtaque - (int) (alvo.getDefesa() * 0.5);
             if (dano < 0) dano = 0;
             alvo.receberDano(dano);
             return ResultadoAtaque.ACERTOU;

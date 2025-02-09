@@ -31,10 +31,13 @@ public abstract class Player {
 
     // Método para receber dano
     public void receberDano(int dano) {
-        int danoFinal = Math.max(0, dano - this.defesa); // Garante que o dano não seja negativo
-        this.hp -= danoFinal;
-        System.out.println(this.nome + " recebeu " + danoFinal + " de dano. Vida restante: " + this.hp);
+        this.hp -= dano;
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+        System.out.println("O herói recebeu " + dano + " de dano! Vida restante: " + this.hp);
     }
+
 
     // Getters e Setters
     public String getNome() { return nome; }
