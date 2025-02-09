@@ -11,6 +11,29 @@ public abstract class Monster extends Player {
     private int dinheiroDropado; // Novo atributo
 
     public Monster(String nome, int hp, int forcaAtaque, int defesa, int destreza, int velocidade, String tipo, int dificuldade, int dinheiroDropado) {
+        switch(dificuldade){
+            case 1:
+                break;
+            case 2:
+                hp *= 1.2;
+                forcaAtaque *= 1.2;
+                defesa *= 1.2;
+                destreza *= 1.2;
+                velocidade *= 1.2;
+                dinheiroDropado *= 1.4;
+                break;
+            case 3:
+                hp *= 1.4;
+                forcaAtaque *= 1.5;
+                defesa *= 1.5;
+                destreza *= 1.5;
+                velocidade *= 1.5;
+                dinheiroDropado *= 1.8;
+                break;
+            default:
+                System.out.println("Valor inválido!");
+        }
+
         super(nome, hp, forcaAtaque, defesa, destreza, velocidade);
         this.tipo = tipo;
         this.dificuldade = dificuldade;

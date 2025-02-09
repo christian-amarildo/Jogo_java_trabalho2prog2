@@ -8,9 +8,11 @@ public class Dificuldade {
     private float fatorResistencia;
     // Número de monstros que aparecerão no jogo, dependendo da dificuldade
     private int numeroMonstros;
+    // Nível de dificuldade do jogo
+    private int nivelDificuldade;
 
     // Construtor da classe Dificuldade
-    public Dificuldade(String nome, float fatorDano, float fatorResistencia, int numeroMonstros) {
+    public Dificuldade(String nome, float fatorDano, float fatorResistencia, int numeroMonstros, int nivelDificuldade) {
         // Inicializa o nome da dificuldade
         this.nome = nome;
         // Inicializa o fator de dano
@@ -19,6 +21,8 @@ public class Dificuldade {
         this.fatorResistencia = fatorResistencia;
         // Inicializa o número de monstros
         this.numeroMonstros = numeroMonstros;
+        // Inicializa o nível de dificuldade
+        this.nivelDificuldade = nivelDificuldade;
     }
 
     // Método para ajustar os parâmetros dos monstros com base na dificuldade
@@ -44,4 +48,7 @@ public class Dificuldade {
 
     // Método getter para obter o número de monstros
     public int getNumeroMonstros() { return numeroMonstros; }
+    
+    // Método getter para obter o nível da dificuldade
+    public int getNivelDificuldade() { return this.nivelDificuldade; }
 }

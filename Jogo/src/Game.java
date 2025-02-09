@@ -27,16 +27,16 @@ public class Game {
         int escolha = scanner.nextInt();
         switch (escolha) {
             case 1:
-                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3);
+                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
                 break;
             case 2:
-                dificuldade = new Dificuldade("Médio", 1.5f, 1.2f, 5);
+                dificuldade = new Dificuldade("Médio", 1.5f, 1.2f, 5, 2);
                 break;
             case 3:
-                dificuldade = new Dificuldade("Difícil", 2.0f, 1.5f, 7);
+                dificuldade = new Dificuldade("Difícil", 2.0f, 1.5f, 7, 3);
                 break;
             default:
-                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3);
+                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
                 break;
         }
     }
@@ -72,9 +72,9 @@ public class Game {
     }
 
     public void inicializarMonstros() {
-        monstros.add(new Slime("Slime", "Comum", 1));
-        monstros.add(new Esqueleto("Esqueleto", "Normal", 2));
-        monstros.add(new Leviatan("Leviatan", "Chefe", 3));
+        monstros.add(new Slime("Slime", "Comum", dificuldade.getNivelDificuldade()));
+        monstros.add(new Esqueleto("Esqueleto", "Normal", dificuldade.getNivelDificuldade()));
+        monstros.add(new Leviatan("Leviatan", "Chefe", dificuldade.getNivelDificuldade()));
     }
 
     public void interagir() {
@@ -135,7 +135,7 @@ public class Game {
         }
     }
 
-
+    // AÇÕES DA LOJA
     public void irLoja() {
         System.out.println("\nBem-vindo à loja!");
         System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
