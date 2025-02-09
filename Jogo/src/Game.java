@@ -154,15 +154,21 @@ public class Game {
     }
 
     public void irDungeon() {
-        System.out.println("\nVocê entrou na Dungeon!");
-        System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-        System.out.println("Monstros disponíveis: Slime, Esqueleto.");
+        jogador.setEmBatalha(true);
 
-        Monster monstroEscolhido = monstros.get(new Random().nextInt(2)); // Slime ou Esqueleto
-        lutarContraMonstro(monstroEscolhido);
+        jogador.verificaHPEmBatalha();
 
-        // Regenerar a vida dos monstros ao sair da Dungeon
-        regenerarVidaMonstros();
+        if(jogador.getEmBatalha()) {
+            System.out.println("\nVocê entrou na Dungeon!");
+            System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
+            System.out.println("Monstros disponíveis: Slime, Esqueleto.");
+
+            Monster monstroEscolhido = monstros.get(new Random().nextInt(2)); // Slime ou Esqueleto
+            lutarContraMonstro(monstroEscolhido);
+
+            // Regenerar a vida dos monstros ao sair da Dungeon
+            regenerarVidaMonstros();
+        }
     }
 
     public void regenerarVidaMonstros() {
@@ -238,10 +244,16 @@ public class Game {
     }
 
     public void lutarContraLeviatan() {
-        System.out.println("\nVocê está enfrentando o Leviatan!");
-        System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-        Monster leviatan = monstros.get(2); // Leviatan
-        lutarContraMonstro(leviatan);
+        jogador.setEmBatalha(true);
+
+        jogador.verificaHPEmBatalha();
+
+        if(jogador.getEmBatalha()) {
+            System.out.println("\nVocê está enfrentando o Leviatan!");
+            System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
+            Monster leviatan = monstros.get(2); // Leviatan
+            lutarContraMonstro(leviatan);
+        }
     }
 
     public void lutarContraMonstro(Monster monstro) {

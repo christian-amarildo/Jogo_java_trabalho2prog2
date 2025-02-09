@@ -7,6 +7,7 @@ public abstract class Hero extends Player {
     private String classe;
     private Habilidade habilidadeEspecial;
     private int dinheiro;
+    private boolean emBatalha = false;
 
     public Hero(String nome, int hp, int forcaAtaque, int defesa, int destreza, int velocidade, String classe, Habilidade habilidadeEspecial, int dinheiro) {
         super(nome, hp, forcaAtaque, defesa, destreza, velocidade);
@@ -38,6 +39,12 @@ public abstract class Hero extends Player {
         System.out.println(this.nome + " recuperou " + quantidade + " de vida. Vida atual: " + this.hp);
     }
 
+    public void verificaHPEmBatalha() {
+        if(getHp() <= 0) {
+            System.out.println("\nVocê está sem HP, se recupere antes de lutar!");
+            setEmBatalha(false);
+        }
+    }
 
     public int getDinheiro() {
         return dinheiro;
@@ -62,5 +69,13 @@ public abstract class Hero extends Player {
 
     public void mostrarDinheiro() {
         System.out.println("Dinheiro disponível: " + dinheiro);
+    }
+
+    public boolean getEmBatalha() {
+        return this.emBatalha;
+    }
+
+    public void setEmBatalha(boolean emBatalha) {
+        this.emBatalha = emBatalha;
     }
 }
