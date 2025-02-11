@@ -3,6 +3,8 @@ package entities.heros;
 import entities.Habilidade;
 import entities.Player;
 
+import java.util.List;
+
 public abstract class Hero extends Player {
     private String classe;
     private Habilidade habilidadeEspecial;
@@ -16,22 +18,34 @@ public abstract class Hero extends Player {
         this.dinheiro = dinheiro;
     }
 
-    public void equiparArma(Item arma) {
-        if (arma.getTipo().equals("Arma")) {
-            this.forcaAtaque += arma.getBonusAtaque(); // Aumenta o ataque do herói
-            System.out.println("Você equipou " + arma.getNome() + "! Força de ataque aumentada para " + this.forcaAtaque + ".");
-        } else {
-            System.out.println("Este item não é uma arma.");
+    public static void curarTodosOsHerois(List<Hero> herois, int quantidade) {
+        for (Hero heroi : herois) {
+            heroi.curar(quantidade); // Cura cada herói
         }
     }
 
-    public void equiparArmadura(Item armadura) {
-        if (armadura.getTipo().equals("Defesa")) {
-            this.defesa += armadura.getBonusDefesa(); // Aumenta a defesa do herói
-            System.out.println("Você equipou " + armadura.getNome() + "! Defesa aumentada para " + this.defesa + ".");
-        } else {
-            System.out.println("Este item não é uma armadura.");
+    public static void aumentarForcaAtaqueTodosOsHerois(List<Hero> herois, int aumento) {
+        for (Hero heroi : herois) {
+            heroi.aumentarForcaAtaque(aumento); // Aumenta a força de ataque de cada herói
         }
+    }
+
+    public static void aumentarDefesaTodosOsHerois(List<Hero> herois, int aumento) {
+        for (Hero heroi : herois) {
+            heroi.aumentarDefesa(aumento); // Aumenta a defesa de cada herói
+        }
+    }
+
+    // Método para aumentar a força de ataque do herói
+    public void aumentarForcaAtaque(int aumento) {
+        this.forcaAtaque += aumento;
+        System.out.println(this.nome + " teve sua força de ataque aumentada para " + this.forcaAtaque);
+    }
+
+    // Método para aumentar a defesa do herói
+    public void aumentarDefesa(int aumento) {
+        this.defesa += aumento;
+        System.out.println(this.nome + " teve sua defesa aumentada para " + this.defesa);
     }
 
     public void curar(int quantidade) {

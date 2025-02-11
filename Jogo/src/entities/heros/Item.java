@@ -2,13 +2,13 @@ package entities.heros;
 
 import entities.Player;
 
-// A classe entities.heros.Item representa um item no jogo, com atributos como nome, tipo e efeito.
 public class Item {
     private String nome;
     private String tipo; // Pode ser "Arma", "Poção", etc.
     private String efeito; // Exemplo: "cura", "dano", etc.
     private int bonusAtaque;
-    private int bonusDefesa; // Bônus de ataque que o item fornece.
+    private int bonusDefesa; // Bônus de defesa que o item fornece.
+    private static int dinheiro; // Variável estática para dinheiro compartilhado entre todos os heróis.
 
     public Item(String nome, String tipo, String efeito, int bonusAtaque, int bonusDefesa) {
         this.nome = nome;
@@ -16,6 +16,14 @@ public class Item {
         this.efeito = efeito;
         this.bonusAtaque = bonusAtaque;
         this.bonusDefesa = bonusDefesa;
+    }
+
+    public static void adicionarDinheiro(int valor) {
+        dinheiro += valor;
+    }
+
+    public static int getDinheiro() {
+        return dinheiro;
     }
 
     public int getBonusDefesa() {

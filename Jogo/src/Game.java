@@ -1,9 +1,12 @@
 import Enums.ResultadoAtaque;
 import entities.Habilidade;
 import entities.Log;
+import entities.Player;
 import entities.heros.*;
 import entities.monsters.*;
 import java.util.*;
+
+import static entities.heros.Hero.*;
 
 public class Game {
     private List<Hero> herois = new ArrayList<>();
@@ -13,7 +16,6 @@ public class Game {
     private InterfaceUsuario ui;
     private Dificuldade dificuldade;
     private Inventario inventario;
-    private Hero jogador;
 
     public Game() {
         log = new Log();
@@ -41,83 +43,146 @@ public class Game {
         }
     }
 
-    public void escolherHeroi() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Apresentando informações detalhadas sobre cada herói
-        System.out.println("Escolha o tipo de herói:");
-
-        // Exibindo informações sobre cada classe de herói
-        System.out.println("(1) Guerreiro - Alta vida e boa defesa, forte no combate corpo a corpo.");
-        System.out.println("   Características:");
-        System.out.println("   - Vida: 110, Força de Ataque: 20, Defesa: 10, Destreza: 10, Velocidade: 8");
-        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
-        System.out.println("   - Estilo: Ideal para quem prefere combate direto e resistência.");
-
-        System.out.println("(2) Mago - Alta destreza e forte no ataque à distância, mas com menos vida e defesa.");
-        System.out.println("   Características:");
-        System.out.println("   - Vida: 80, Força de Ataque: 25, Defesa: 5, Destreza: 15, Velocidade: 10");
-        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
-        System.out.println("   - Estilo: Ideal para quem prefere atacar de longe com alta potência.");
-
-        System.out.println("(3) Arqueiro - Boa destreza e alta velocidade, pode atacar à distância com precisão.");
-        System.out.println("   Características:");
-        System.out.println("   - Vida: 90, Força de Ataque: 18, Defesa: 10, Destreza: 20, Velocidade: 12");
-        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
-        System.out.println("   - Estilo: Ideal para quem prefere agilidade e ataques de precisão à distância.");
-
-        System.out.println("(4) Furtivo - Alta velocidade e destreza, ideal para ataques rápidos e furtivos.");
-        System.out.println("   Características:");
-        System.out.println("   - Vida: 100, Força de Ataque: 22, Defesa: 8, Destreza: 18, Velocidade: 14");
-        System.out.println("   - Habilidade Especial: Golpe Especial (Causa 15 de dano adicional)");
-        System.out.println("   - Estilo: Ideal para quem prefere furtividade e ataques rápidos com alta agilidade.");
-        System.out.println(".");
-        System.out.println(" escolha o heroi digitando um número de 1 a 4:");
-
-        // Solicitando a escolha do herói
-        int escolha = scanner.nextInt();
-        while (escolha < 1 || escolha > 4) {  // Verificação de entrada
-            System.out.println("Escolha inválida! Digite um número entre 1 e 4.");
-            escolha = scanner.nextInt();
-        }
-
-        // Definindo a habilidade do herói
+    public void gerarHerois() {
+        // Gerar heróis automaticamente
         Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
+        herois.add(new Guerreiro("Tharos", 110, 5, 1000, 10, 8, "Guerreiro", habilidadeHeroi, 100));
+        herois.add(new Mago("Elaria", 80, 25, 5, 15, 10, "Mago", habilidadeHeroi, 150));
+        herois.add(new Arqueiro("Lian", 90, 18, 5, 20, 12, "Arqueiro", habilidadeHeroi, 110));
+        herois.add(new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120));
 
-        // Criando o herói baseado na escolha
-        switch (escolha) {
-            case 1:
-                jogador = new Guerreiro("Tharos", 110, 20, 10, 10, 8, "Guerreiro", habilidadeHeroi, 100);
-                break;
-            case 2:
-                jogador = new Mago("Elaria", 80, 25, 5, 15, 10, "Mago", habilidadeHeroi, 150);
-                break;
-            case 3:
-                jogador = new Arqueiro("Lian", 90, 18, 10, 20, 12, "Arqueiro", habilidadeHeroi, 110);
-                break;
-            case 4:
-                jogador = new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120);
-                break;
+        // Passar o log para cada herói
+        for (Hero heroi : herois) {
+            heroi.setLog(log);
         }
 
-        // Passa o Log para o herói
-        jogador.setLog(log);
-
-        // Exibe as informações do herói escolhido
-        System.out.println("Você escolheu o herói: " + jogador.getNome());
-        System.out.println("Características do " + jogador.getNome() + ":");
-        System.out.println("   - Vida: " + jogador.getHp());
-        System.out.println("   - Força de Ataque: " + jogador.getForcaAtaque());
-        System.out.println("   - Defesa: " + jogador.getDefesa());
-        System.out.println("   - Destreza: " + jogador.getDestreza());
-        System.out.println("   - Velocidade: " + jogador.getVelocidade());
-        System.out.println("Com " + jogador.getDinheiro() + " moedas.");
+        // Exibir informações sobre os heróis
+        for (Hero heroi : herois) {
+            System.out.println(heroi.getNome() + " - Vida: " + heroi.getHp() + ", Força de Ataque: " + heroi.getForcaAtaque());
+        }
     }
 
     public void inicializarMonstros() {
-        monstros.add(new Slime("Slime", "Comum", dificuldade.getNivelDificuldade()));
-        monstros.add(new Esqueleto("Esqueleto", "Normal", dificuldade.getNivelDificuldade()));
-        monstros.add(new Leviatan("Leviatan", "Chefe", dificuldade.getNivelDificuldade()));
+        // Gerar uma quantidade aleatória de monstros (Slimes e Esqueletos)
+        Random rand = new Random();
+        int quantidadeMonstros = rand.nextInt(4) + 1; // Até 6 monstros
+
+        for (int i = 0; i < quantidadeMonstros; i++) {
+            // Alteração aqui para garantir que o código gere tanto Slimes quanto Esqueletos corretamente
+            if (rand.nextInt(2) == 0) {  // 50% de chance para Slime ou Esqueleto
+                monstros.add(new Slime("Slime", "Comum", dificuldade.getNivelDificuldade()));
+            } else {
+                monstros.add(new Esqueleto("Esqueleto", "Normal", dificuldade.getNivelDificuldade()));
+            }
+        }
+    }
+
+
+    public void iniciarCombate() {
+        while (true) {
+            // Remover heróis mortos da lista
+            removerHeroisMortos();
+            removerMonstrosMortos();
+
+            // Verificar se o combate terminou (se todos os heróis foram derrotados)
+            if (todosOsHeroisForamDerrotados()) {
+                System.out.println(Cores.VERMELHO + "Todos os heróis foram derrotados. Fim do jogo!" + Cores.RESET);
+                log.adicionarLog("Todos os heróis foram derrotados. Fim do jogo!");
+                break; // Fim do combate
+            }
+
+            // Verificar se os monstros foram derrotados
+            if (todosOsMonstrosForamDerrotados()) {
+                System.out.println(Cores.VERDE + "Os heróis venceram a batalha!" + Cores.RESET);
+                log.adicionarLog("Os heróis venceram a batalha!");
+                break; // Fim do combate
+            }
+
+            // Os heróis agem automaticamente
+            for (Player heroi : herois) {
+                if (heroi.getHp() > 0) {
+                    heroi.inteligenciaArtificial(monstros, herois);
+                }
+            }
+
+            // Os monstros agem automaticamente
+            for (Player monstro : monstros) {
+                if (monstro.getHp() > 0) {
+                    monstro.inteligenciaArtificial(monstros, herois);
+                }
+            }
+
+            // Exibir o status dos participantes após cada rodada
+            exibirStatus();
+        }
+    }
+
+    private void removerHeroisMortos() {
+        // Remover heróis mortos da lista
+        Iterator<Hero> iterator = herois.iterator();
+        while (iterator.hasNext()) {
+            Player heroi = iterator.next();
+            if (heroi.getHp() <= 0) {
+                System.out.println(heroi.getNome() + " foi derrotado!");
+                iterator.remove(); // Remove o herói da lista
+            }
+        }
+    }
+
+    private void removerMonstrosMortos() {
+        // Remover monstros mortos da lista
+        Iterator<Monster> iterator = monstros.iterator();
+        while (iterator.hasNext()) {
+            Monster monstro = iterator.next();
+            if (monstro.getHp() <= 0) {
+                // Quando o monstro for derrotado, realiza o drop de dinheiro
+                monstro.dropDinheiro();
+                System.out.println(monstro.getNome() + " foi derrotado!");
+                iterator.remove(); // Remove o monstro da lista
+            }
+        }
+    }
+
+
+
+    private boolean todosOsMonstrosForamDerrotados() {
+        for (Player monstro : monstros) {
+            if (monstro.getHp() > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean todosOsHeroisForamDerrotados() {
+        for (Player heroi : herois) {
+            if (heroi.getHp() > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void exibirStatus() {
+        System.out.println("\n" + Cores.AMARELO + "Status Atual:" + Cores.RESET);
+
+        // Exibir heróis restantes
+        System.out.println(Cores.AZUL + "Heróis:" + Cores.RESET);
+        for (Player heroi : herois) {
+            System.out.println(heroi.getNome() + " - Vida: " + heroi.getHp());
+        }
+
+        // Exibir monstros restantes
+        System.out.println(Cores.VERMELHO + "Monstros:" + Cores.RESET);
+        for (Player monstro : monstros) {
+            System.out.println(monstro.getNome() + " - Vida: " + monstro.getHp());
+        }
+
+        // Mostrar quantidade de monstros em batalha
+        System.out.println("\n" + Cores.MAGENTA + "Monstros restantes em batalha: " + monstros.size() + Cores.RESET);
+
+        // Registrar no log o status atual da batalha
+        log.adicionarLog("Status atual - Heróis restantes: " + herois.size() + ", Monstros restantes: " + monstros.size());
     }
 
     public void interagir() {
@@ -125,11 +190,18 @@ public class Game {
         boolean jogoAtivo = true;
 
         while (jogoAtivo) {
-            jogador.mostrarDinheiro(); // Mostra o dinheiro do jogador
-            System.out.println("\nO que você deseja fazer?");
+            // Verificar se todos os heróis estão mortos
+            if (todosOsHeroisForamDerrotados()) {
+                System.out.println(Cores.VERMELHO + "Todos os heróis foram derrotados. Fim do jogo!" + Cores.RESET);
+                break; // Se todos os heróis foram derrotados, termina o jogo
+            }
+
+            // Mostra o dinheiro compartilhado entre os heróis
+            System.out.println("\n" + Cores.AMARELO + "Dinheiro compartilhado: " + Item.getDinheiro() + Cores.RESET);
+            System.out.println("\n" + Cores.CYAN + "O que você deseja fazer?" + Cores.RESET);
             System.out.println("1. Ir para a Dungeon");
             System.out.println("2. Ir para a Loja");
-            System.out.println("3. Lutar contra o Leviatan");
+            System.out.println("3. Enfrentar o Leviatã");
             System.out.println("4. Sair");
             int escolha = scanner.nextInt();
 
@@ -141,40 +213,113 @@ public class Game {
                     irLoja();
                     break;
                 case 3:
-                    lutarContraLeviatan();
+                    enfrentarLeviata();
                     break;
                 case 4:
                     jogoAtivo = false;
-                    System.out.println("Você saiu do jogo.");
+                    System.out.println(Cores.VERMELHO + "Você saiu do jogo." + Cores.RESET);
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println(Cores.VERMELHO + "Opção inválida. Tente novamente." + Cores.RESET);
+            }
+        }
+    }
+
+    public void enfrentarLeviata() {
+        System.out.println("\nVocê escolheu enfrentar o Leviatã!");
+
+        // Adicionando o Leviatã à batalha
+        Monster leviatan = new Leviatan("Leviatã", "Chefe", dificuldade.getNivelDificuldade());
+        monstros.clear(); // Limpa os monstros existentes
+        monstros.add(leviatan); // Adiciona o Leviatã à batalha
+
+        // Exibe o status do Leviatã
+        System.out.println("Você está enfrentando o Leviatã!");
+        System.out.println("Leviatã - Vida: " + leviatan.getHp() + ", Força de Ataque: " + leviatan.getForcaAtaque());
+
+        // Iniciar a batalha contra o Leviatã
+        boolean batalhaAtiva = true;
+        while (batalhaAtiva) {
+            // Imprime o status atual da batalha
+            exibirStatus();
+            removerHeroisMortos();
+
+            // O Leviatã ataca todos os heróis
+            for (Hero heroi : herois) {
+                ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi); // Leviatã ataca cada herói
+                if (resultadoLeviatan == ResultadoAtaque.ACERTOU) {
+                    // Se o ataque acertou, o herói recebe o dano
+                    System.out.println(heroi.getNome() + " recebeu dano do Leviatã!");
+                } else {
+                    System.out.println(heroi.getNome() + " evitou o ataque do Leviatã!");
+                }
+            }
+
+            // Verifica se todos os heróis foram derrotados
+            boolean heroiDerrotado = true;
+            for (Hero heroi : herois) {
+                if (heroi.getHp() > 0) {
+                    heroiDerrotado = false;
+                    break;
+                }
+            }
+
+            if (heroiDerrotado) {
+                System.out.println("O Leviatã te derrotou. Fim do jogo.");
+                log.adicionarLog("Jogador foi derrotado pelo Leviatã.");
+                batalhaAtiva = false;
+                break;
+            }
+
+            // Cada herói ataca o Leviatã
+            for (Hero heroi : herois) {
+                ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan); // Dano causado pelo herói
+                if (resultadoHeroi == ResultadoAtaque.ACERTOU) {
+                    System.out.println(heroi.getNome() + " causou dano no Leviatã!");
+                } else {
+                    System.out.println(heroi.getNome() + " errou o ataque contra o Leviatã!");
+                }
+            }
+
+            // Verifica se o Leviatã foi derrotado
+            if (leviatan.getHp() <= 0) {
+                System.out.println("Parabéns! Você derrotou o Leviatã e venceu o jogo!");
+                log.adicionarLog("Jogador derrotou o Leviatã e venceu o jogo!");
+                batalhaAtiva = false;
             }
         }
     }
 
     public void irDungeon() {
-        jogador.setEmBatalha(true);
-
-        jogador.verificaHPEmBatalha();
-
-        if(jogador.getEmBatalha()) {
-            System.out.println("\nVocê entrou na Dungeon!");
-            System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-            System.out.println("Monstros disponíveis: Slime, Esqueleto.");
-
-            Monster monstroEscolhido = monstros.get(new Random().nextInt(2)); // Slime ou Esqueleto
-            lutarContraMonstro(monstroEscolhido);
-
-            // Regenerar a vida dos monstros ao sair da Dungeon
-            regenerarVidaMonstros();
+        // Exibe quais heróis estão vivos e seus atributos
+        System.out.println("\nHeróis vivos:");
+        for (Hero heroi : herois) {
+            if (heroi.getHp() > 0) {
+                System.out.println("Nome: " + heroi.getNome());
+                System.out.println("  - Vida: " + heroi.getHp());
+                System.out.println("  - Força de Ataque: " + heroi.getForcaAtaque());
+                System.out.println("  - Defesa: " + heroi.getDefesa());
+                System.out.println("  - Destreza: " + heroi.getDestreza());
+                System.out.println("  - Velocidade: " + heroi.getVelocidade());
+                System.out.println("----------------------");
+            }
         }
+
+        // Inicializar monstros novamente antes de iniciar a batalha
+        inicializarMonstros();
+
+        // Iniciar o combate
+        iniciarCombate();
+
+        // Regenerar a vida dos monstros ao sair da Dungeon
+        regenerarVidaMonstros();
     }
+
 
     public void regenerarVidaMonstros() {
         // Itera sobre a lista de monstros e regenera a vida
         for (Monster monstro : monstros) {
-            if (monstro.getNome() == "Slime"){
+            if (monstro.getNome() == "Slime") {
                 monstro.setHp(15);
             } else {
                 monstro.setHp(20);
@@ -184,15 +329,19 @@ public class Game {
         }
     }
 
-    // AÇÕES DA LOJA
     public void irLoja() {
         System.out.println("\nBem-vindo à loja!");
-        System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
+        System.out.println(Cores.AMARELO + "Dinheiro compartilhado: " + Item.getDinheiro() + Cores.RESET);
+
+
+
+        // Registrar o acesso à loja e o dinheiro atual
+        log.adicionarLog("Acessou a loja. Dinheiro atual: " + Item.getDinheiro());
+
         System.out.println("Você pode comprar itens aqui.");
-        System.out.println("1. Poção de Cura - 30 moedas (Recupera 50 de vida)");
-        System.out.println("2. Espada - 200 moedas (Aumenta o ataque em 20)");
-        System.out.println("3. Espada Melhorada - 300 moedas (Aumenta o ataque em 30)");
-        System.out.println("4. Armadura - 250 moedas (Aumenta a defesa em 15)");
+        System.out.println("1. Poção de Cura - 30 moedas (Recupera 50 de vida para todos os heróis)");
+        System.out.println("2. Poção de Força de Ataque - 40 moedas (Aumenta a força de ataque em 10 para todos os heróis)");
+        System.out.println("3. Poção de Defesa - 50 moedas (Aumenta a defesa em 10 para todos os heróis)");
         System.out.println("Digite o número do item que deseja comprar:");
 
         Scanner scanner = new Scanner(System.in);
@@ -200,135 +349,58 @@ public class Game {
 
         switch (escolhaLoja) {
             case 1:
-                if (jogador.getDinheiro() >= 30) {
-                    jogador.gastarDinheiro(30);
-                    jogador.curar(50);
-                    System.out.println("Você comprou uma Poção de Cura!");
+                if (Item.getDinheiro() >= 30) {
+                    Item.adicionarDinheiro(-30); // Gastar 30 moedas
+                    log.adicionarLog("Comprou uma Poção de Cura por 30 moedas.");
+                    System.out.println(Cores.VERDE + "Você comprou uma Poção de Cura!" + Cores.RESET);
+                    curarTodosOsHerois(herois, 50); // Recuperar 50 de vida para todos os heróis
                 } else {
-                    System.out.println("Você não tem dinheiro suficiente para comprar a Poção de Cura.");
+                    System.out.println(Cores.VERMELHO + "Você não tem dinheiro suficiente para comprar a Poção de Cura." + Cores.RESET);
+                    log.adicionarLog("Tentou comprar uma Poção de Cura, mas não tinha dinheiro suficiente.");
                 }
                 break;
+
             case 2:
-                if (jogador.getDinheiro() >= 200) {
-                    jogador.gastarDinheiro(200);
-                    Item espada = new Item("Espada", "Arma", "dano", 10, 1);
-                    inventario.adicionarItem(espada);
-                    jogador.equiparArma(espada); // Equipa a espada
+                if (Item.getDinheiro() >= 40) {
+                    Item.adicionarDinheiro(-40); // Gastar 40 moedas
+                    log.adicionarLog("Comprou uma Poção de Força de Ataque por 40 moedas.");
+                    System.out.println(Cores.VERDE + "Você comprou uma Poção de Força de Ataque!" + Cores.RESET);
+                    aumentarForcaAtaqueTodosOsHerois(herois, 5); // Aumentar 5 de força de ataque para todos os heróis
                 } else {
-                    System.out.println("Você não tem dinheiro suficiente para comprar a Espada.");
+                    System.out.println(Cores.VERMELHO + "Você não tem dinheiro suficiente para comprar a Poção de Força de Ataque." + Cores.RESET);
+                    log.adicionarLog("Tentou comprar uma Poção de Força de Ataque, mas não tinha dinheiro suficiente.");
                 }
                 break;
+
             case 3:
-                if (jogador.getDinheiro() >= 300) {
-                    jogador.gastarDinheiro(300);
-                    Item espadaMelhorada = new Item("Espada Melhorada", "Arma", "dano", 15, 2);
-                    inventario.adicionarItem(espadaMelhorada);
-                    jogador.equiparArma(espadaMelhorada); // Equipa a espada melhorada
+                if (Item.getDinheiro() >= 50) {
+                    Item.adicionarDinheiro(-50); // Gastar 50 moedas
+                    log.adicionarLog("Comprou uma Poção de Defesa por 50 moedas.");
+                    System.out.println(Cores.VERDE + "Você comprou uma Poção de Defesa!" + Cores.RESET);
+                    aumentarDefesaTodosOsHerois(herois, 3); // Aumentar 3 de defesa para todos os heróis
                 } else {
-                    System.out.println("Você não tem dinheiro suficiente para comprar a Espada Melhorada.");
+                    System.out.println(Cores.VERMELHO + "Você não tem dinheiro suficiente para comprar a Poção de Defesa." + Cores.RESET);
+                    log.adicionarLog("Tentou comprar uma Poção de Defesa, mas não tinha dinheiro suficiente.");
                 }
                 break;
-            case 4:
-                if (jogador.getDinheiro() >= 250) {
-                    jogador.gastarDinheiro(250);
-                    Item armadura = new Item("Armadura", "Defesa", "proteção", 15, 3);
-                    inventario.adicionarItem(armadura);
-                    jogador.equiparArmadura(armadura); // Equipa a armadura
-                } else {
-                    System.out.println("Você não tem dinheiro suficiente para comprar a Armadura.");
-                }
-                break;
+
+
             default:
-                System.out.println("Opção inválida.");
+                System.out.println("Opção inválida. Tente novamente.");
         }
-    }
-
-    public void lutarContraLeviatan() {
-        jogador.setEmBatalha(true);
-
-        jogador.verificaHPEmBatalha();
-
-        if(jogador.getEmBatalha()) {
-            System.out.println("\nVocê está enfrentando o Leviatan!");
-            System.out.println("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-            Monster leviatan = monstros.get(2); // Leviatan
-            lutarContraMonstro(leviatan);
-        }
-    }
-
-    public void lutarContraMonstro(Monster monstro) {
-        log.adicionarLog("Você está lutando contra " + monstro.getNome() + "!");
-
-        // Exibir os atributos do herói antes da batalha
-        log.adicionarLog("Atributos do Herói:");
-        log.adicionarLog("Ataque: " + jogador.getForcaAtaque() + ", Defesa: " + jogador.getDefesa());
-        log.adicionarLog("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-        log.adicionarLog("Vida do Monstro (" + monstro.getNome() + "): " + monstro.getHp());
-
-        while (jogador.getHp() > 0 && monstro.getHp() > 0) {
-            // Exibir os status de vida antes de cada rodada de ataques
-            log.adicionarLog("\n--- Início da rodada ---");
-            log.adicionarLog("Vida do Herói (" + jogador.getNome() + "): " + jogador.getHp());
-            log.adicionarLog("Vida do Monstro (" + monstro.getNome() + "): " + monstro.getHp());
-
-            // Atributos do herói
-            log.adicionarLog("Atributos atuais do Herói:");
-            log.adicionarLog("Ataque: " + jogador.getForcaAtaque() + ", Defesa: " + jogador.getDefesa());
-
-            // Herói ataca
-            log.adicionarLog(jogador.getNome() + " ataca " + monstro.getNome() + "!");
-            ResultadoAtaque resultado = jogador.realizarAtaque(monstro);
-            switch (resultado) {
-                case ACERTOU:
-                    log.adicionarLog("O ataque acertou!");
-                    break;
-                case CRITICAL_HIT:
-                    log.adicionarLog("Golpe crítico!");
-                    break;
-                case ERROU:
-                    log.adicionarLog("O ataque errou!");
-                    break;
-            }
-
-            // Verifica se o monstro ainda está vivo
-            if (monstro.getHp() > 0) {
-                // Monstro ataca
-                log.adicionarLog(monstro.getNome() + " ataca " + jogador.getNome() + "!");
-                ResultadoAtaque resultadoMonstro = monstro.realizarAtaque(jogador);
-                switch (resultadoMonstro) {
-                    case ACERTOU:
-                        log.adicionarLog("O ataque do monstro acertou!");
-                        break;
-                    case CRITICAL_HIT:
-                        log.adicionarLog("Golpe crítico do monstro!");
-                        break;
-                    case ERROU:
-                        log.adicionarLog("O ataque do monstro errou!");
-                        break;
-                }
-            }
-        }
-
-        // Resultado da batalha
-        if (jogador.getHp() > 0) {
-            log.adicionarLog("Você venceu " + monstro.getNome() + "!");
-            // Adiciona o dinheiro dropado pelo monstro ao jogador
-            jogador.gastarDinheiro(-monstro.getDinheiroDropado()); // Usa negativo para adicionar dinheiro
-            log.adicionarLog("Você ganhou " + monstro.getDinheiroDropado() + " moedas!");
-        } else {
-            log.adicionarLog("Você foi derrotado por " + monstro.getNome() + "!");
-        }
-
-        // Exibe todos os logs da batalha
-        log.exibirEventos();
     }
 
 
     public static void main(String[] args) {
-        Game game = new Game();
-        game.escolherDificuldade();
-        game.escolherHeroi();
-        game.inicializarMonstros();
-        game.interagir();
+        // Criação da instância do jogo
+        Game jogo = new Game();
+
+        jogo.escolherDificuldade();
+
+        jogo.gerarHerois();
+
+        jogo.inicializarMonstros();
+
+        jogo.interagir();
     }
 }

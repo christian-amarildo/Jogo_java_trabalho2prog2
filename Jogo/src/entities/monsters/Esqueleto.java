@@ -5,7 +5,7 @@ import entities.Player;
 
 public class Esqueleto extends Monster {
     public Esqueleto(String nome, String tipo, int dificuldade) {
-        super(nome, 20, 11, 8, 15, 12, tipo, dificuldade, 20); // Dropa 20 moedas
+        super(nome, 15, 10, 5, 15, 12, tipo, dificuldade, 20); // Dropa 20 moedas
     }
 
     @Override

@@ -10,20 +10,6 @@ public class Mago extends Hero {
     }
 
     @Override
-    public void equiparArma(Item arma) {
-        if (arma.getTipo().equals("Arma")) {
-            int bonus = arma.getBonusAtaque();
-            if (arma.getNome().equals("Varinha")) {
-                bonus += 8; // Bônus adicional para magos com varinhas
-            }
-            this.forcaAtaque += bonus; // Usando forcaAtaque
-            System.out.println("Você equipou " + arma.getNome() + "! Força de ataque aumentada para " + this.forcaAtaque + ".");
-        } else {
-            System.out.println("Este item não é uma arma.");
-        }
-    }
-
-    @Override
     public ResultadoAtaque realizarAtaque(Player alvo) {
         double chanceAcerto = Math.random() * 100;
 
