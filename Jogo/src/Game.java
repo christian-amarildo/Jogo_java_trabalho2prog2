@@ -46,7 +46,7 @@ public class Game {
     public void gerarHerois() {
         // Gerar heróis automaticamente
         Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
-        herois.add(new Guerreiro("Tharos", 110, 5, 1000, 10, 8, "Guerreiro", habilidadeHeroi, 100));
+        herois.add(new Guerreiro("Tharos", 110, 5, 10, 10, 8, "Guerreiro", habilidadeHeroi, 100));
         herois.add(new Mago("Elaria", 80, 25, 5, 15, 10, "Mago", habilidadeHeroi, 150));
         herois.add(new Arqueiro("Lian", 90, 18, 5, 20, 12, "Arqueiro", habilidadeHeroi, 110));
         herois.add(new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120));
