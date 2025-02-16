@@ -4,6 +4,8 @@ import entities.Log;
 import entities.Player;
 import entities.heros.*;
 import entities.monsters.*;
+import utils.Cores;
+
 import java.util.*;
 
 import static entities.heros.Hero.*;

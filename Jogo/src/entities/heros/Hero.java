@@ -1,5 +1,6 @@
 package entities.heros;
 
+import Enums.ResultadoAtaque;
 import entities.Habilidade;
 import entities.Player;
 
@@ -17,6 +18,44 @@ public abstract class Hero extends Player {
         this.habilidadeEspecial = habilidadeEspecial;
         this.dinheiro = dinheiro;
     }
+
+    @Override
+    public ResultadoAtaque realizarAtaque(Player alvo) {
+        double chanceAcerto = Math.random() * 100;
+
+        // Se o ataque acertou, baseado na destreza do herói
+        if (chanceAcerto <= this.destreza) {
+            int dano = calcularDanoNormal(alvo);
+            alvo.receberDano(dano);
+            return ResultadoAtaque.ACERTOU;
+        }
+
+        // Verifica se houve um crítico
+        if (chanceAcerto > 95) {
+            int dano = calcularDanoCritico(alvo);
+            alvo.receberDano(dano);
+            return ResultadoAtaque.CRITICAL_HIT;
+        }
+
+        return ResultadoAtaque.ERROU; // Ataque falhou
+    }
+
+    public int calcularDanoNormal(Player alvo) {
+        // O dano normal é calculado subtraindo a defesa do alvo
+        int dano = this.forcaAtaque - alvo.getDefesa();
+        if (dano < 0) dano = 0; // Impede dano negativo
+        return dano;
+    }
+
+    public int calcularDanoCritico(Player alvo) {
+        // O dano crítico é calculado da mesma forma, mas com um bônus multiplicador
+        int dano = (this.forcaAtaque - alvo.getDefesa()) * 2; // Dano crítico dobra
+        if (dano < 0) dano = 0; // Impede dano negativo
+        return dano;
+    }
+
+
+
 
     public static void curarTodosOsHerois(List<Hero> herois, int quantidade) {
         for (Hero heroi : herois) {

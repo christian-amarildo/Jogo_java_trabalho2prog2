@@ -1,5 +1,7 @@
+package utils;
+
 public class Cores {
-    // Cores padrão
+    // utils.Cores padrão
     public static final String RESET = "\033[0m";  // Reseta a cor
     public static final String VERDE = "\033[0;32m"; // Verde
     public static final String VERMELHO = "\033[0;31m"; // Vermelho

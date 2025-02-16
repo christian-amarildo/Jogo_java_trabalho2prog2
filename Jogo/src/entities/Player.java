@@ -3,9 +3,12 @@ package entities;
 import Enums.ResultadoAtaque;
 import entities.heros.Hero;
 import entities.monsters.Monster;
+import utils.Cores;
+
 
 import java.util.List;
 import java.util.Random;
+
 
 public abstract class Player {
     protected String nome;
@@ -54,14 +57,30 @@ public abstract class Player {
             // O herói escolhe um monstro aleatório para atacar
             Player alvo = inimigos.get(random.nextInt(inimigos.size()));
             System.out.println(atacante.getNome() + " (herói) decide atacar " + alvo.getNome());
-            atacante.realizarAtaque(alvo);  // O herói realiza o ataque
+
+
+            if (atacante.realizarAtaque(alvo) == ResultadoAtaque.ACERTOU) {
+                System.out.println(Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET);
+            } else if (atacante.realizarAtaque(alvo) == ResultadoAtaque.CRITICAL_HIT) {
+                System.out.println(Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET);
+            } else {
+                System.out.println(Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET);
+            }
+
+
         }
         // Se o atacante for um monstro
         else if (atacante instanceof Monster) {
             // O monstro escolhe um herói aleatório para atacar
             Player alvo = aliados.get(random.nextInt(aliados.size()));
             System.out.println(atacante.getNome() + " (monstro) decide atacar " + alvo.getNome());
-            atacante.realizarAtaque(alvo);  // O monstro realiza o ataque
+            if (atacante.realizarAtaque(alvo) == ResultadoAtaque.ACERTOU) {
+                System.out.println(Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET);
+            } else if (atacante.realizarAtaque(alvo) == ResultadoAtaque.CRITICAL_HIT) {
+                System.out.println(Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET);
+            } else {
+                System.out.println(Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET);
+            }// O monstro realiza o ataque
         }
     }
 
