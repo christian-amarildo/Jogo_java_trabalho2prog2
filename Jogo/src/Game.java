@@ -14,7 +14,7 @@ public class Game {
     private List<Hero> herois = new ArrayList<>();
     private List<Monster> monstros = new ArrayList<>();
     private Log log;
-    private Turno turno;
+    private Turno turno = new Turno();
     private InterfaceUsuario ui;
     private Dificuldade dificuldade;
     private Inventario inventario;
@@ -145,8 +145,6 @@ public class Game {
         }
     }
 
-
-
     private boolean todosOsMonstrosForamDerrotados() {
         for (Player monstro : monstros) {
             if (monstro.getHp() > 0) {
@@ -242,53 +240,25 @@ public class Game {
         // Iniciar a batalha contra o Leviatã
         boolean batalhaAtiva = true;
         while (batalhaAtiva) {
-            // Imprime o status atual da batalha
-            exibirStatus();
-            removerHeroisMortos();
-
-            // O Leviatã ataca todos os heróis
+            // Turno do Leviatã
             for (Hero heroi : herois) {
-                ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi); // Leviatã ataca cada herói
-                if (resultadoLeviatan == ResultadoAtaque.ACERTOU) {
-                    // Se o ataque acertou, o herói recebe o dano
-                    System.out.println(heroi.getNome() + " recebeu dano do Leviatã!");
-                } else {
-                    System.out.println(heroi.getNome() + " evitou o ataque do Leviatã!");
+                if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
+                    ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi);
+                    turno.jogarTurno(leviatan, heroi, resultadoLeviatan);
                 }
             }
 
-            // Verifica se todos os heróis foram derrotados
-            boolean heroiDerrotado = true;
+            // Turno dos Heróis
             for (Hero heroi : herois) {
-                if (heroi.getHp() > 0) {
-                    heroiDerrotado = false;
-                    break;
+                if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
+                    ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan);
+                    turno.jogarTurno(heroi, leviatan, resultadoHeroi);
                 }
             }
 
-            if (heroiDerrotado) {
-                System.out.println("O Leviatã te derrotou. Fim do jogo.");
-                log.adicionarLog("Jogador foi derrotado pelo Leviatã.");
-                batalhaAtiva = false;
-                break;
-            }
+            // Verificações finais do turno
+            batalhaAtiva = turno.heroisVivos(herois) && turno.bossVivo(leviatan);
 
-            // Cada herói ataca o Leviatã
-            for (Hero heroi : herois) {
-                ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan); // Dano causado pelo herói
-                if (resultadoHeroi == ResultadoAtaque.ACERTOU) {
-                    System.out.println(heroi.getNome() + " causou dano no Leviatã!");
-                } else {
-                    System.out.println(heroi.getNome() + " errou o ataque contra o Leviatã!");
-                }
-            }
-
-            // Verifica se o Leviatã foi derrotado
-            if (leviatan.getHp() <= 0) {
-                System.out.println("Parabéns! Você derrotou o Leviatã e venceu o jogo!");
-                log.adicionarLog("Jogador derrotou o Leviatã e venceu o jogo!");
-                batalhaAtiva = false;
-            }
         }
     }
 
@@ -331,6 +301,7 @@ public class Game {
         }
     }
 
+    // LOJA
     public void irLoja() {
         System.out.println("\nBem-vindo à loja!");
         System.out.println(Cores.AMARELO + "Dinheiro compartilhado: " + Item.getDinheiro() + Cores.RESET);
