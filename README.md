@@ -146,7 +146,7 @@ int danoCritico = (forcaAtaque * 2) - defesaInimiga;
 
 ## 📚 Documentação Técnica
 
-### Diagrama de Classes Simplificado
+### Diagrama de Classes do Jogo
 
 ```mermaid
 classDiagram
