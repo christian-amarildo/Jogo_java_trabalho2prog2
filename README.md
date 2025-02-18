@@ -150,24 +150,194 @@ int danoCritico = (forcaAtaque * 2) - defesaInimiga;
 
 ```mermaid
 classDiagram
-    class Game{
-        -herois: List<Hero>
-        -monstros: List<Monster>
-        +iniciarCombate()
+    class Game {
+        - herois: ArrayList~Hero~
+        - monstros: ArrayList~Monster~
+        - log: Log
+        - turno: Turno
+        - ui: InterfaceUsuario
+        - dificuldade: Dificuldade
+        - inventario: Inventario
+        + escolherDificuldade() : void
+        + gerarHerois() : void
+        + inicializarMonstros() : void
+        + iniciarCombate() : void
+        - removerHeroisMortos() : void
+        - removerMonstrosMortos() : void
+        - todosOsMonstrosForamDerrotados() : boolean
+        - todosOsHeroisForamDerrotados() : boolean
+        - exibirStatus() : void
+        + interagir() : void
+        + enfrentarLeviata() : void
+        + irDungeon() : void
+        + regenerarVidaMonstros() : void
+        + irLoja() : void
+        + main( args : String[] ) : void
     }
-    
-    class Hero{
-        -habilidadeEspecial: Habilidade
-        +realizarAtaque()
+
+    class InterfaceUsuario {
+        - scanner: Scanner
+        + mostrarStatusJogadores(jogadores : List~Player~) : void
+        + mostrarLogs(log : Log) : void
+        + exibirResultado(resultado : String) : void
+        + obterEscolha() : int
     }
-    
-    class Monster{
-        -dificuldade: int
-        +dropDinheiro()
+
+    class Inventario {
+        - itens: ArrayList~Item~
+        + adicionarItem(item : Item) : void
+        + listarItens() : void
     }
-    
-    Game "1" *-- "*" Hero
-    Game "1" *-- "*" Monster
+
+    class Turno {
+        - jogador: Hero
+        - monstro: Monstro
+        - log: Log
+        + iniciarTurno() : void
+        + jogarTurnoHeroi(heroi : Hero) : void
+        + jogarTurnoMonstro(monstro : Monster) : void
+    }
+
+    class Habilidade {
+        - nome: String
+        - tipo: String
+        - custo: int
+        - efeito: String
+        + executarHabilidade(usuario : Player, alvo : Player) : void
+    }
+
+    class Log {
+        - logs: ArrayList~String~
+        + adicionarLog(log : String) : void
+        + exibirEventos() : void
+    }
+
+    class Player {
+        # nome: String
+        # hp: int
+        # forcaAtaque: int
+        # defesa: int
+        # destreza: int
+        # velocidade: int
+        # log: Log
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+        + receberDano(dano : int) : void
+        + inteligenciaArtificial(inimigos: List~Monster~, aliados : List~Hero~) : void
+        - getMaiorVelocidade(players : List~Monster~) : int
+    }
+
+    class Guerreiro {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class Hero {
+        - classe: String
+        - habilidadeEspecial: Habilidade
+        - dinheiro: int
+        - emBatalha : boolean = false
+        + curarTodosOsHerois(herois : List~Hero~, quantidade: int) : void
+        + aumentarForcaAtaqueTodosOsHerois(herois : List~Hero~, aumento : int) : void
+        + aumentarDefesaTodosOsHerois(herois : List~Hero~, aumento : int) : void
+        + aumentarForcaAtaque(aumento : int) : void
+        + aumentarDefesa(aumento : int) : void
+        + curar(quantidade : int) : void
+        + verificarHPEmBatalha() : void
+    }
+
+    class Item {
+        - nome: String
+        - tipo: String
+        - efeito: String
+        - bonusAtaque: int
+        - bonusDefesa: int
+        - dinheiro : int
+        + adicionarDinheiro(valor : int) : void
+    }
+
+    class Monster {
+        - tipo: String
+        - dificuldade: int
+        - dinheiroDropado: int
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+        + dropDinheiro() : void
+    }
+
+    class Slime {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class ResultadoAtaque {
+        <<enumeration>>
+        ERROU
+        ACERTOU
+        CRITICAL_HIT
+    }
+
+    class Dificuldade {
+        - nome: String
+        - fatorDano: float
+        - fatorResistencia: float
+        - numeroMonstros: int
+        - nivelDificuldade: int
+        + ajustarParametros(monstros : List~Monster~) : void
+    }
+
+    class Arqueiro {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class Furtivo {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class Mago {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class Esqueleto {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class Leviatan {
+        + realizarAtaque(alvo : Player) : ResultadoAtaque
+    }
+
+    class utils.Cores {
+        + RESET : String
+        + VERDE : String
+        + VERMELHO : String
+        + AZUL : String
+        + AMARELO : String
+        + MAGENTA : String
+        + CYAN : String
+    }
+
+    Game --> InterfaceUsuario : 1
+    Game --> Inventario : 1
+    Game --> Turno : 1
+    Game --> Dificuldade : 1
+    Game --> Log : 1
+    Game --> Hero : n
+    Game --> Monster : n
+    InterfaceUsuario --> Log : 1
+    Inventario --> Item : n
+    Turno --> Hero : 1
+    Turno --> Monster : 1
+    Turno --> Log : 1
+    Habilidade --> Player : 1
+    Player --> Log : 1
+    Hero --> Player : Extends
+    Monster --> Player : Extends
+    Guerreiro --> Hero : Extends
+    Arqueiro --> Hero : Extends
+    Furtivo --> Hero : Extends
+    Mago --> Hero : Extends
+    Slime --> Monster : Extends
+    Esqueleto --> Monster : Extends
+    Leviatan --> Monster : Extends
+    ResultadoAtaque --> Player : 1
+    ResultadoAtaque --> Monster : 1
+    utils.Cores --> Game : Usa
 ```
 
 ---
