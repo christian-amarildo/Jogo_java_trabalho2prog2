@@ -225,6 +225,7 @@ public class Game {
         }
     }
 
+    // LEVIATÃ
     public void enfrentarLeviata() {
         System.out.println("\nVocê escolheu enfrentar o Leviatã!");
 
@@ -262,6 +263,7 @@ public class Game {
         }
     }
 
+    // DUNGEON
     public void irDungeon() {
         // Exibe quais heróis estão vivos e seus atributos
         System.out.println("\nHeróis vivos:");

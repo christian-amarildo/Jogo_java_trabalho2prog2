@@ -1,3 +1,11 @@
+// SEPARAR A FUNÇÃO "JOGAR_TURNO()" PARA DUNGEON E LEVIATÃ
+// IMPLEMENTAR IA DENTRO DA "JOGAR_TURNO()" DA DUNGEON
+// JOGAR_TURNO_LEVIATAN: RECEBE 3 PARÂMETROS: "Player player, Player opponent, ResultadoAtaque ra"
+// JOGAR_TURNO_DUNGEON: RECEBE 2 PARÂMETROS: "Player player, Player opponent"
+
+// PROVÁVEL: IMPLEMENTAR ESSA FUNÇÃO DENTRO DESSA CLASSE
+// exibirStatus(); --> EXIBE OS STATUS DOS PARTICIPANTES A CADA RODADA
+
 import Enums.ResultadoAtaque;
 import entities.Log;
 import entities.Player;
