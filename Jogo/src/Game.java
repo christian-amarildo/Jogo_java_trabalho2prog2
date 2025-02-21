@@ -81,38 +81,15 @@ public class Game {
 
 
     public void iniciarCombate() {
-        while (true) {
+        boolean batalhaAtiva = true;
+        while (batalhaAtiva) {
             // Remover heróis mortos da lista
             removerHeroisMortos();
             removerMonstrosMortos();
 
-            // Verificar se o combate terminou (se todos os heróis foram derrotados)
-            if (todosOsHeroisForamDerrotados()) {
-                System.out.println(Cores.VERMELHO + "Todos os heróis foram derrotados. Fim do jogo!" + Cores.RESET);
-                log.adicionarLog("Todos os heróis foram derrotados. Fim do jogo!");
-                break; // Fim do combate
-            }
+            turno.jogarturnoBatalhaDungeon(herois, monstros);
 
-            // Verificar se os monstros foram derrotados
-            if (todosOsMonstrosForamDerrotados()) {
-                System.out.println(Cores.VERDE + "Os heróis venceram a batalha!" + Cores.RESET);
-                log.adicionarLog("Os heróis venceram a batalha!");
-                break; // Fim do combate
-            }
-
-            // Os heróis agem automaticamente
-            for (Player heroi : herois) {
-                if (heroi.getHp() > 0) {
-                    heroi.inteligenciaArtificial(monstros, herois);
-                }
-            }
-
-            // Os monstros agem automaticamente
-            for (Player monstro : monstros) {
-                if (monstro.getHp() > 0) {
-                    monstro.inteligenciaArtificial(monstros, herois);
-                }
-            }
+            batalhaAtiva = turno.heroisVivos(herois, false) && turno.monstrosVivos(monstros);
 
             // Exibir o status dos participantes após cada rodada
             exibirStatus();
@@ -143,25 +120,7 @@ public class Game {
                 iterator.remove(); // Remove o monstro da lista
             }
         }
-    }
-
-    private boolean todosOsMonstrosForamDerrotados() {
-        for (Player monstro : monstros) {
-            if (monstro.getHp() > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean todosOsHeroisForamDerrotados() {
-        for (Player heroi : herois) {
-            if (heroi.getHp() > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+    }    
 
     private void exibirStatus() {
         System.out.println("\n" + Cores.AMARELO + "Status Atual:" + Cores.RESET);
@@ -191,7 +150,7 @@ public class Game {
 
         while (jogoAtivo) {
             // Verificar se todos os heróis estão mortos
-            if (todosOsHeroisForamDerrotados()) {
+            if (!turno.heroisVivos(herois, false)) {
                 System.out.println(Cores.VERMELHO + "Todos os heróis foram derrotados. Fim do jogo!" + Cores.RESET);
                 break; // Se todos os heróis foram derrotados, termina o jogo
             }
@@ -245,7 +204,7 @@ public class Game {
             for (Hero heroi : herois) {
                 if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
                     ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi);
-                    turno.jogarTurno(leviatan, heroi, resultadoLeviatan);
+                    turno.jogarTurnoBatalhaBoss(heroi, leviatan, resultadoLeviatan);
                 }
             }
 
@@ -253,16 +212,18 @@ public class Game {
             for (Hero heroi : herois) {
                 if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
                     ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan);
-                    turno.jogarTurno(heroi, leviatan, resultadoHeroi);
+                    turno.jogarTurnoBatalhaBoss(heroi, leviatan, resultadoHeroi);
                 }
             }
 
+            // Exibe o status da batalha
+            exibirStatus();
+
             // Verificações finais do turno
-            batalhaAtiva = turno.heroisVivos(herois) && turno.bossVivo(leviatan);
+            batalhaAtiva = turno.heroisVivos(herois, true) && turno.bossVivo(leviatan);
 
         }
     }
-
     // DUNGEON
     public void irDungeon() {
         // Exibe quais heróis estão vivos e seus atributos
