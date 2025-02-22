@@ -87,7 +87,8 @@ public class Game {
             removerHeroisMortos();
             removerMonstrosMortos();
 
-            turno.jogarturnoBatalhaDungeon(herois, monstros);
+            // Decidindo os turnos:
+            turno.decidirTurnoBatalhaDungeon(herois, monstros);
 
             batalhaAtiva = turno.heroisVivos(herois, false) && turno.monstrosVivos(monstros);
 
@@ -200,21 +201,8 @@ public class Game {
         // Iniciar a batalha contra o Leviatã
         boolean batalhaAtiva = true;
         while (batalhaAtiva) {
-            // Turno do Leviatã
-            for (Hero heroi : herois) {
-                if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
-                    ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi);
-                    turno.jogarTurnoBatalhaBoss(heroi, leviatan, resultadoLeviatan);
-                }
-            }
-
-            // Turno dos Heróis
-            for (Hero heroi : herois) {
-                if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
-                    ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan);
-                    turno.jogarTurnoBatalhaBoss(heroi, leviatan, resultadoHeroi);
-                }
-            }
+            // Decidindo os turnos:
+            turno.decidirturnoBatalhaBoss(herois, leviatan);
 
             // Exibe o status da batalha
             exibirStatus();

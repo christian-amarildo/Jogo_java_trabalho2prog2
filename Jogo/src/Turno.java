@@ -1,11 +1,3 @@
-// SEPARAR A FUNÇÃO "JOGAR_TURNO()" PARA DUNGEON E LEVIATÃ
-// IMPLEMENTAR IA DENTRO DA "JOGAR_TURNO()" DA DUNGEON
-// JOGAR_TURNO_LEVIATAN: RECEBE 3 PARÂMETROS: "Player player, Player opponent, ResultadoAtaque ra"
-// JOGAR_TURNO_DUNGEON: RECEBE 2 PARÂMETROS: "Player player, Player opponent"
-
-// PROVÁVEL: IMPLEMENTAR ESSA FUNÇÃO DENTRO DESSA CLASSE
-// exibirStatus(); --> EXIBE OS STATUS DOS PARTICIPANTES A CADA RODADA
-
 import Enums.ResultadoAtaque;
 import entities.Log;
 import entities.Player;
@@ -21,7 +13,7 @@ public class Turno {
 
     // |--------------------DUNGEON----------------------|
     // PARTE DAS FUNÇÕES QUE CUIDA DAS BATALHAS DA DUNGEON
-    public void jogarturnoBatalhaDungeon(List<Hero> herois, List<Monster> monstros) {
+    public void decidirTurnoBatalhaDungeon(List<Hero> herois, List<Monster> monstros) {
         for (Hero heroi : herois) {
             if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
                 heroi.inteligenciaArtificial(monstros, herois);
@@ -53,25 +45,29 @@ public class Turno {
 
     // |--------------------BOSS---------------------|
     // PARTE QUE CUIDA DAS FUNÇÕES DA BATALHA DO CHEFE
-    public void jogarTurnoBatalhaBoss(Player player, Player opponent, ResultadoAtaque ra) {
-        if(player instanceof Hero) {
-            // Turno do jogador
-            jogarTurnoHeroiBatalhaBoss(player, opponent, ra);
-
-            // Verifica se o monstro foi derrotado após o ataque do herói
-            verificaDerrotaDoBoss(player, opponent);            
-        } else if(player instanceof Monster) {
-            // Turno do monstro
-            jogarTurnoBoss(player, opponent, ra);
-
-            // Verifica se o herói foi derrotado após o ataque do monstro
-            verificaDerrotaDoHeroi(player, opponent);
+    public void decidirturnoBatalhaBoss(List<Hero> herois, Monster leviatan) {
+        // Turno dos Heróis
+        for (Hero heroi : herois) {
+            if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
+                ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi);
+                jogarTurnoHeroiBatalhaBoss(heroi, leviatan, resultadoLeviatan);
+                verificaDerrotaDoBoss(heroi, leviatan);
+                log.exibirEventos();
+            }
         }
-
-        // Exibe todos os logs da batalha
-        log.exibirEventos();
+        
+        // Turno do Chefe
+        for (Hero heroi : herois) {
+            if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
+                ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan);
+                jogarTurnoBoss(leviatan, heroi, resultadoHeroi);
+                verificaDerrotaDoHeroi(leviatan, heroi);
+                log.exibirEventos();
+            }
+        }
     }
 
+    
     public void verificaDerrotaDoBoss(Player player, Player opponent) {
         if (opponent.getHp() <= 0) {
             System.out.println("O monstro " + opponent.getNome() + " foi derrotado pelo herói " + player.getNome() + "!\n");

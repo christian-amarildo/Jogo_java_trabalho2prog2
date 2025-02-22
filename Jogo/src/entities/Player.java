@@ -58,9 +58,8 @@ public abstract class Player {
             Player alvo = inimigos.get(random.nextInt(inimigos.size()));
             System.out.println(atacante.getNome() + " (herói) decide atacar " + alvo.getNome());
 
-            // provavel mudança:
             if (atacante.realizarAtaque(alvo) == ResultadoAtaque.ACERTOU) {
-                
+                System.out.println(Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET);
             } else if (atacante.realizarAtaque(alvo) == ResultadoAtaque.CRITICAL_HIT) {
                 System.out.println(Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET);
             } else {
