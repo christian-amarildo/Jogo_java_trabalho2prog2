@@ -4,6 +4,7 @@ import entities.Log;
 import entities.Player;
 import entities.heros.*;
 import entities.monsters.*;
+import exceptions.DificuldadeRangeException;
 import utils.Cores;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class Game {
         inventario = new Inventario();
     }
 
-    public void escolherDificuldade() {
+    public void escolherDificuldade() throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escolha a dificuldade: (1) Fácil (2) Médio (3) Difícil");
         int escolha = scanner.nextInt();
@@ -40,9 +41,9 @@ public class Game {
                 dificuldade = new Dificuldade("Difícil", 1.5f, 1.5f, 7, 3);
                 break;
             default:
-                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
-                break;
+                throw new DificuldadeRangeException("Erro ao escolher a dificuldade. Escolha um número de (1) a (3).");
         }
+
     }
 
     public void gerarHerois() {
@@ -145,7 +146,7 @@ public class Game {
         log.adicionarLog("Status atual - Heróis restantes: " + herois.size() + ", Monstros restantes: " + monstros.size());
     }
 
-    public void interagir() {
+    public void interagir() throws InputMismatchException{
         Scanner scanner = new Scanner(System.in);
         boolean jogoAtivo = true;
 
@@ -316,15 +317,43 @@ public class Game {
 
 
     public static void main(String[] args) {
+
         // Criação da instância do jogo
         Game jogo = new Game();
 
-        jogo.escolherDificuldade();
+        // tratamento de exceção: Cada método que tiver uma exceção irá propagar o erro para ser tratado no main.
+
+        boolean finalizaDificuldade = false;
+        while (finalizaDificuldade == false) {
+
+            try {
+                jogo.escolherDificuldade();
+                finalizaDificuldade = true;
+            }
+            catch (InputMismatchException e){
+                System.out.println(Cores.VERMELHO + "Erro na digitação da dificuldade. Digite um número inteiro." + Cores.RESET);
+            }
+            catch (DificuldadeRangeException e){
+                System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);
+            }
+        }
 
         jogo.gerarHerois();
 
         jogo.inicializarMonstros();
 
-        jogo.interagir();
+        boolean finalizaInteragir = false;
+        while (finalizaInteragir == false) {
+            try {
+                jogo.interagir();
+                finalizaInteragir = true;
+            } catch (InputMismatchException e){
+                System.out.println(Cores.VERMELHO + "Erro ao escolher uma opção no menu. Digite um número inteiro." + Cores.RESET);
+            }
+        }
+
+
+
+
     }
 }
