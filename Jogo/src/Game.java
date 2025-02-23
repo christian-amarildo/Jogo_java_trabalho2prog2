@@ -321,7 +321,7 @@ public class Game {
         // Criação da instância do jogo
         Game jogo = new Game();
 
-        // tratamento de exceção: Cada método que tiver uma exceção irá propagar o erro para ser tratado no main.
+        // tratamento de exceção: Cada método que tiver uma exceção irá propaga-lá para ser tratada no main.
 
         boolean finalizaDificuldade = false;
         while (finalizaDificuldade == false) {
@@ -351,9 +351,6 @@ public class Game {
                 System.out.println(Cores.VERMELHO + "Erro ao escolher uma opção no menu. Digite um número inteiro." + Cores.RESET);
             }
         }
-
-
-
 
     }
 }

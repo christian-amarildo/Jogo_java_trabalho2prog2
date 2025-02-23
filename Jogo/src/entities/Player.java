@@ -9,13 +9,15 @@ import utils.Cores;
 import java.util.List;
 import java.util.Random;
 
-/* A classe player é uma classe abstrata, ou seja, não pode ser instanciada. Ela é superclasse de Heroi e Monster.
-* Suas duas subclasses também são abstratas, que finalmente serão implementadas por outras classes.
+/*
+A classe player é uma classe abstrata, ou seja, não pode ser instanciada. Ela é superclasse de Heroi e Monster.
+* Suas duas subclasses também são abstratas, que finalmente serão implementadas por outras classes (Mago, Slime, etc).
 *
 * O conceito de abstração está sendo utilizado nessas três classes, e também no método abstrato realizarAtaque(),
-* sendo implementado pelas subclasses Heroi e Monster.
+* que é implementado pelas subclasses Heroi e Monster.
 *
-* O conceito de Herança pode ser encontrado na relação de Player, Heroi, Monster e as subclasses dessas ultimas duas classes.*/
+* O conceito de Herança pode ser encontrado no relacionamento de Player, Heroi, Monster e suas subclasses.
+*/
 
 
 public abstract class Player {
