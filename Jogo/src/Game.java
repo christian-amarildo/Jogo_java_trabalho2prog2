@@ -1,11 +1,10 @@
-import Enums.ResultadoAtaque;
-import entities.Habilidade;
 import entities.Log;
 import entities.Player;
 import entities.heros.*;
 import entities.monsters.*;
 import exceptions.DificuldadeRangeException;
 import utils.Cores;
+import utils.Dificuldade;
 
 import java.util.*;
 
@@ -32,13 +31,13 @@ public class Game {
         int escolha = scanner.nextInt();
         switch (escolha) {
             case 1:
-                dificuldade = new Dificuldade("Fácil", 0.5f, 1.0f, 3, 1);
+                dificuldade = new Dificuldade("Fácil", 0.6f, 0.6f,  1);
                 break;
             case 2:
-                dificuldade = new Dificuldade("Médio", 1.0f, 1.2f, 5, 2);
+                dificuldade = new Dificuldade("Médio", 1.0f, 1.0f,  2);
                 break;
             case 3:
-                dificuldade = new Dificuldade("Difícil", 1.5f, 1.5f, 7, 3);
+                dificuldade = new Dificuldade("Difícil", 1.15f, 1.15f,  3);
                 break;
             default:
                 throw new DificuldadeRangeException("Erro ao escolher a dificuldade. Escolha um número de (1) a (3).");
@@ -48,11 +47,11 @@ public class Game {
 
     public void gerarHerois() {
         // Gerar heróis automaticamente
-        Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
-        herois.add(new Guerreiro("Tharos", 150 + dificuldade.getNivelDificuldade() * 30, 5 + dificuldade.getNivelDificuldade() * 2, 10, 10, 8, "Guerreiro", habilidadeHeroi));
-        herois.add(new Mago("Elaria", 110 + dificuldade.getNivelDificuldade() * 20, 25, 5, 15, 10, "Mago", habilidadeHeroi));
-        herois.add(new Arqueiro("Lian", 120 + dificuldade.getNivelDificuldade() * 20, 18, 5, 20, 12, "Arqueiro", habilidadeHeroi));
-        herois.add(new Furtivo("Silas", 130 + dificuldade.getNivelDificuldade() * 25, 22, 8, 18, 14, "Furtivo", habilidadeHeroi));
+
+        herois.add(new Guerreiro("Tharos", 150, 25, 10, 10, 8, "Guerreiro"));
+        herois.add(new Mago("Elaria", 100, 10, 5, 15, 10, "Mago"));
+        herois.add(new Arqueiro("Lian", 120, 18, 5, 20, 12, "Arqueiro"));
+        herois.add(new Furtivo("Silas", 130, 20, 8, 25, 14, "Furtivo"));
 
         // Passar o log para cada herói
         for (Hero heroi : herois) {
@@ -68,14 +67,14 @@ public class Game {
     public void inicializarMonstros() {
         // Gerar uma quantidade aleatória de monstros (Slimes e Esqueletos)
         Random rand = new Random();
-        int quantidadeMonstros = rand.nextInt(4) + 1; // Até 6 monstros
+        int quantidadeMonstros = rand.nextInt(3) + 1;
 
         for (int i = 0; i < quantidadeMonstros; i++) {
             // Alteração aqui para garantir que o código gere tanto Slimes quanto Esqueletos corretamente
             if (rand.nextInt(2) == 0) {  // 50% de chance para Slime ou Esqueleto
-                monstros.add(new Slime("Slime", "Comum", dificuldade.getNivelDificuldade()));
+                monstros.add(new Slime("Slime", "Comum", dificuldade));
             } else {
-                monstros.add(new Esqueleto("Esqueleto", "Normal", dificuldade.getNivelDificuldade()));
+                monstros.add(new Esqueleto("Esqueleto", "Normal", dificuldade));
             }
         }
     }
@@ -122,7 +121,7 @@ public class Game {
                 iterator.remove(); // Remove o monstro da lista
             }
         }
-    }    
+    }
 
     private void exibirStatus() {
         System.out.println("\n" + Cores.AMARELO + "Status Atual:" + Cores.RESET);
@@ -133,18 +132,29 @@ public class Game {
             System.out.println(heroi.getNome() + " - Vida: " + heroi.getHp());
         }
 
-        // Exibir monstros restantes
-        System.out.println(Cores.VERMELHO + "Monstros:" + Cores.RESET);
-        for (Player monstro : monstros) {
-            System.out.println(monstro.getNome() + " - Vida: " + monstro.getHp());
-        }
+        System.out.println("-=-=-=-=-=-=-=");
 
-        // Mostrar quantidade de monstros em batalha
-        System.out.println("\n" + Cores.MAGENTA + "Monstros restantes em batalha: " + monstros.size() + Cores.RESET);
+        // Remover monstros mortos da lista antes de exibir
+        removerMonstrosMortos();
+
+        // Exibir monstros restantes apenas se houver monstros vivos
+        if (monstros.size() > 0) {
+            System.out.println(Cores.VERMELHO + "Monstros:" + Cores.RESET);
+            for (Player monstro : monstros) {
+                System.out.println(monstro.getNome() + " - Vida: " + monstro.getHp());
+            }
+
+            // Mostrar quantidade de monstros restantes em batalha
+            System.out.println("\n" + Cores.MAGENTA + "Monstros restantes em batalha: " + monstros.size() + Cores.RESET);
+        } else {
+            System.out.println(Cores.VERMELHO + "Nenhum monstro restante." + Cores.RESET);
+        }
 
         // Registrar no log o status atual da batalha
         log.adicionarLog("Status atual - Heróis restantes: " + herois.size() + ", Monstros restantes: " + monstros.size());
     }
+
+
 
     public void interagir() throws InputMismatchException{
         Scanner scanner = new Scanner(System.in);
@@ -191,7 +201,7 @@ public class Game {
         System.out.println("\nVocê escolheu enfrentar o Leviatã!");
 
         // Adicionando o Leviatã à batalha
-        Monster leviatan = new Leviatan("Leviatã", "Chefe", dificuldade.getNivelDificuldade());
+        Monster leviatan = new Leviatan("Leviatã", "Chefe", dificuldade);
         monstros.clear(); // Limpa os monstros existentes
         monstros.add(leviatan); // Adiciona o Leviatã à batalha
 

@@ -1,3 +1,5 @@
+package utils;
+
 // Classe que representa a dificuldade do jogo
 public class Dificuldade {
     // Nome da dificuldade (ex: Fácil, Médio, Difícil)
@@ -6,21 +8,16 @@ public class Dificuldade {
     private float fatorDano;
     // Fator que multiplica a resistência dos monstros com base na dificuldade
     private float fatorResistencia;
-    // Número de monstros que aparecerão no jogo, dependendo da dificuldade
-    private int numeroMonstros;
-    // Nível de dificuldade do jogo
     private int nivelDificuldade;
 
-    // Construtor da classe Dificuldade
-    public Dificuldade(String nome, float fatorDano, float fatorResistencia, int numeroMonstros, int nivelDificuldade) {
+    // Construtor da classe utils.Dificuldade
+    public Dificuldade(String nome, float fatorDano, float fatorResistencia, int nivelDificuldade) {
         // Inicializa o nome da dificuldade
         this.nome = nome;
         // Inicializa o fator de dano
         this.fatorDano = fatorDano;
         // Inicializa o fator de resistência
         this.fatorResistencia = fatorResistencia;
-        // Inicializa o número de monstros
-        this.numeroMonstros = numeroMonstros;
         // Inicializa o nível de dificuldade
         this.nivelDificuldade = nivelDificuldade;
     }
@@ -45,9 +42,6 @@ public class Dificuldade {
 
     // Método getter para obter o fator de resistência
     public float getFatorResistencia() { return fatorResistencia; }
-
-    // Método getter para obter o número de monstros
-    public int getNumeroMonstros() { return numeroMonstros; }
     
     // Método getter para obter o nível da dificuldade
     public int getNivelDificuldade() { return this.nivelDificuldade; }

@@ -2,10 +2,11 @@ package entities.monsters;
 
 import Enums.ResultadoAtaque;
 import entities.Player;
+import utils.Dificuldade;
 
 public class Leviatan extends Monster {
-    public Leviatan(String nome, String tipo, int dificuldade) {
-        super(nome, 10 + dificuldade * 2, 8 + dificuldade * 3, 5, 5, 10, tipo, dificuldade, 10 + dificuldade * 2); // Atributos ajustados
+    public Leviatan(String nome, String tipo, Dificuldade dificuldade) {
+        super(nome, 250, 35, 15, 20, 15, tipo, 100, dificuldade); // Atributos ajustados
     }
 
     @Override
@@ -14,7 +15,7 @@ public class Leviatan extends Monster {
 
         // Se o ataque acertou
         if (chanceAcerto <= 75) { // 75% de chance de acerto
-            int dano = this.forcaAtaque - alvo.getDefesa();
+            float dano = this.forcaAtaque - alvo.getDefesa();
             if (dano < 0) dano = 0; // Impede dano negativo
 
             // Se houve dano crítico (exemplo: 20% de chance)

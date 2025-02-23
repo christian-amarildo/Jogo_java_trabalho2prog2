@@ -37,8 +37,8 @@ public class Turno {
             }
         }
 
-//        System.out.println("Os heróis venceram a batalha! Parabéns!");
-        log.adicionarLog("Os heróis venceram a batalha! Parabéns!");
+//    System.out.println("Os heróis venceram a batalha! Parabéns!");
+//        log.adicionarLog("Os heróis venceram a batalha! Parabéns!");
 
         return false;
     }
@@ -134,7 +134,7 @@ public class Turno {
             return false;
         }
 
-        System.out.println("Todos os heróis foram derrotados! Fim do Jogo!");
+//        System.out.println("Todos os heróis foram derrotados! Fim do Jogo!");
         log.adicionarLog("Todos os heróis foram derrotados! Fim do Jogo!");
 
         return false;

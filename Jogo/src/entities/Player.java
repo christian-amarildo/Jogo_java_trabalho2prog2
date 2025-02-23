@@ -22,14 +22,14 @@ A classe player é uma classe abstrata, ou seja, não pode ser instanciada. Ela 
 
 public abstract class Player {
     protected String nome;
-    protected int hp;
-    protected int forcaAtaque;
-    protected int defesa;
-    protected int destreza;
-    protected int velocidade;
+    protected float hp;
+    protected float forcaAtaque;
+    protected float defesa;
+    protected float destreza;
+    protected float velocidade;
     protected Log log;
 
-    public Player(String nome, int hp, int forcaAtaque, int defesa, int destreza, int velocidade) {
+    public Player(String nome,  float hp,  float forcaAtaque,  float defesa,  float destreza,  float velocidade) {
         this.nome = nome;
         this.hp = hp;
         this.forcaAtaque = forcaAtaque;
@@ -47,7 +47,7 @@ public abstract class Player {
     public abstract ResultadoAtaque realizarAtaque(Player alvo);
 
     // Método para receber dano
-    public void receberDano(int dano) {
+    public void receberDano(float dano) {
         this.hp -= dano;
         if (this.hp < 0) {
             this.hp = 0;
@@ -97,8 +97,8 @@ public abstract class Player {
 
 
     // Método para obter a maior velocidade da lista de jogadores
-    private int getMaiorVelocidade(List<Monster> players) {
-        int maiorVelocidade = 0;
+    private float getMaiorVelocidade(List<Monster> players) {
+        float maiorVelocidade = 0;
         for (Player player : players) {
             if (player.getVelocidade() > maiorVelocidade) {
                 maiorVelocidade = player.getVelocidade();
@@ -110,15 +110,15 @@ public abstract class Player {
     // Getters e Setters
     public String getNome() { return nome; }
 
-    public int getHp() { return hp; }
+    public float getHp() { return hp; }
 
     public void setHp(int hp) { this.hp = hp; }
 
-    public int getForcaAtaque() { return forcaAtaque; }
+    public float getForcaAtaque() { return forcaAtaque; }
 
-    public int getDefesa() { return defesa; }
+    public float getDefesa() { return defesa; }
 
-    public int getDestreza() { return destreza; }
+    public float getDestreza() { return destreza; }
 
-    public int getVelocidade() { return velocidade; }
+    public float getVelocidade() { return velocidade; }
 }
