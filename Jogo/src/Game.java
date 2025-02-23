@@ -32,10 +32,10 @@ public class Game {
         int escolha = scanner.nextInt();
         switch (escolha) {
             case 1:
-                dificuldade = new Dificuldade("Fácil", 1.0f, 1.0f, 3, 1);
+                dificuldade = new Dificuldade("Fácil", 0.5f, 1.0f, 3, 1);
                 break;
             case 2:
-                dificuldade = new Dificuldade("Médio", 1.2f, 1.2f, 5, 2);
+                dificuldade = new Dificuldade("Médio", 1.0f, 1.2f, 5, 2);
                 break;
             case 3:
                 dificuldade = new Dificuldade("Difícil", 1.5f, 1.5f, 7, 3);
@@ -49,10 +49,10 @@ public class Game {
     public void gerarHerois() {
         // Gerar heróis automaticamente
         Habilidade habilidadeHeroi = new Habilidade("Golpe Especial", "Dano", 15, "Causa dano especial");
-        herois.add(new Guerreiro("Tharos", 110, 5, 10, 10, 8, "Guerreiro", habilidadeHeroi, 100));
-        herois.add(new Mago("Elaria", 80, 25, 5, 15, 10, "Mago", habilidadeHeroi, 150));
-        herois.add(new Arqueiro("Lian", 90, 18, 5, 20, 12, "Arqueiro", habilidadeHeroi, 110));
-        herois.add(new Furtivo("Silas", 100, 22, 8, 18, 14, "Furtivo", habilidadeHeroi, 120));
+        herois.add(new Guerreiro("Tharos", 150 + dificuldade.getNivelDificuldade() * 30, 5 + dificuldade.getNivelDificuldade() * 2, 10, 10, 8, "Guerreiro", habilidadeHeroi));
+        herois.add(new Mago("Elaria", 110 + dificuldade.getNivelDificuldade() * 20, 25, 5, 15, 10, "Mago", habilidadeHeroi));
+        herois.add(new Arqueiro("Lian", 120 + dificuldade.getNivelDificuldade() * 20, 18, 5, 20, 12, "Arqueiro", habilidadeHeroi));
+        herois.add(new Furtivo("Silas", 130 + dificuldade.getNivelDificuldade() * 25, 22, 8, 18, 14, "Furtivo", habilidadeHeroi));
 
         // Passar o log para cada herói
         for (Hero heroi : herois) {

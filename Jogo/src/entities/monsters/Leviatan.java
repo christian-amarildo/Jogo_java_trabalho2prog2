@@ -5,7 +5,7 @@ import entities.Player;
 
 public class Leviatan extends Monster {
     public Leviatan(String nome, String tipo, int dificuldade) {
-        super(nome, 300, 40, 20, 20, 15, tipo, dificuldade, 100); // Atributos ajustados
+        super(nome, 10 + dificuldade * 2, 8 + dificuldade * 3, 5, 5, 10, tipo, dificuldade, 10 + dificuldade * 2); // Atributos ajustados
     }
 
     @Override

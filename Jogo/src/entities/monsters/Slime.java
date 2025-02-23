@@ -5,7 +5,7 @@ import entities.Player;
 
 public class Slime extends Monster {
     public Slime(String nome, String tipo, int dificuldade) {
-        super(nome, 10, 8, 5, 5, 10, tipo, dificuldade, 10); // Dropa 10 moedas
+        super(nome, 10 + dificuldade * 2, 8 + dificuldade * 3, 5, 5, 10, tipo, dificuldade, 10 + dificuldade * 2); // Ajuste de vida, força de ataque e dinheiro dropado
     }
 
     @Override

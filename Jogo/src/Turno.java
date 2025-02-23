@@ -37,7 +37,7 @@ public class Turno {
             }
         }
 
-        System.out.println("Os heróis venceram a batalha! Parabéns!");
+//        System.out.println("Os heróis venceram a batalha! Parabéns!");
         log.adicionarLog("Os heróis venceram a batalha! Parabéns!");
 
         return false;

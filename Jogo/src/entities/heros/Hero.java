@@ -9,14 +9,14 @@ import java.util.List;
 public abstract class Hero extends Player {
     private String classe;
     private Habilidade habilidadeEspecial;
-    private int dinheiro;
+
     private boolean emBatalha = false;
 
-    public Hero(String nome, int hp, int forcaAtaque, int defesa, int destreza, int velocidade, String classe, Habilidade habilidadeEspecial, int dinheiro) {
+    public Hero(String nome, int hp, int forcaAtaque, int defesa, int destreza, int velocidade, String classe, Habilidade habilidadeEspecial) {
         super(nome, hp, forcaAtaque, defesa, destreza, velocidade);
         this.classe = classe;
         this.habilidadeEspecial = habilidadeEspecial;
-        this.dinheiro = dinheiro;
+
     }
 
     @Override
@@ -99,18 +99,7 @@ public abstract class Hero extends Player {
         }
     }
 
-    public int getDinheiro() {
-        return dinheiro;
-    }
 
-    public void gastarDinheiro(int valor) {
-        if (dinheiro >= valor) {
-            dinheiro -= valor;
-            System.out.println("Compra realizada com sucesso!");
-        } else {
-            System.out.println("Dinheiro insuficiente.");
-        }
-    }
 
     public String getClasse() {
         return classe;
@@ -118,10 +107,6 @@ public abstract class Hero extends Player {
 
     public Habilidade getHabilidadeEspecial() {
         return habilidadeEspecial;
-    }
-
-    public void mostrarDinheiro() {
-        System.out.println("Dinheiro disponível: " + dinheiro);
     }
 
     public boolean getEmBatalha() {
