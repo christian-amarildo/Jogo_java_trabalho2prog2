@@ -45,47 +45,24 @@ public class Turno {
 
     // |--------------------BOSS---------------------|
     // PARTE QUE CUIDA DAS FUNÇÕES DA BATALHA DO CHEFE
-    public void decidirturnoBatalhaBoss(List<Hero> herois, Monster leviatan) {
+    public void decidirturnoBatalhaBoss(List<Hero> herois, List<Monster> leviatan) {
+
         // Turno dos Heróis
         for (Hero heroi : herois) {
             if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
-                ResultadoAtaque resultadoLeviatan = leviatan.realizarAtaque(heroi);
-                jogarTurnoHeroiBatalhaBoss(heroi, leviatan, resultadoLeviatan);
-                verificaDerrotaDoBoss(heroi, leviatan);
-                log.exibirEventos();
+                heroi.inteligenciaArtificial(leviatan, herois);
+
             }
         }
         
         // Turno do Chefe
-        for (Hero heroi : herois) {
-            if (heroi.getHp() > 0) {  // Verifica se herói ainda está vivo
-                ResultadoAtaque resultadoHeroi = heroi.realizarAtaque(leviatan);
-                jogarTurnoBoss(leviatan, heroi, resultadoHeroi);
-                verificaDerrotaDoHeroi(leviatan, heroi);
-                log.exibirEventos();
+        for(Monster monstro : leviatan) {
+            if (monstro.getHp() > 0) {  // Verifica se o monstro ainda está vivo
+                monstro.inteligenciaArtificial(leviatan, herois);
             }
         }
-    }
 
-    
-    public void verificaDerrotaDoBoss(Player player, Player opponent) {
-        if (opponent.getHp() <= 0) {
-            System.out.println("O monstro " + opponent.getNome() + " foi derrotado pelo herói " + player.getNome() + "!\n");
-            log.adicionarLog("O monstro " + opponent.getNome() + " foi derrotado pelo herói " + player.getNome() + "!\n");
-        }
-    }
-
-    public void jogarTurnoBoss(Player monstro, Player heroi, ResultadoAtaque ra) {
-        // A lógica do turno do monstro
-        System.out.println("\nTurno do monstro: " + monstro.getNome());
-
-        // Realiza a ação do monstro
-        log.adicionarLog("Resultado do ataque do monstro: " + ra);
-
-        if(ra != ResultadoAtaque.ERROU) {
-            System.out.println("O herói " + heroi.getNome() + " recebeu dano do monstro " + monstro.getNome() + "\n");
-            log.adicionarLog("O herói " + heroi.getNome() + " recebeu dano do monstro " + monstro.getNome());
-        }
+        log.exibirEventos();
     }
 
     public boolean bossVivo(Monster monstro) {
@@ -93,33 +70,28 @@ public class Turno {
             return true;
         }
 
-        System.out.println("Parabéns, você derrotou o leviatã e venceu o jogo!");
-        log.adicionarLog("Parabéns, você derrotou o leviatã e venceu o jogo!");
+        // Mensagem bonita com arte
+        System.out.println("\n");
+        System.out.println("**********************************************");
+        System.out.println("               VITÓRIA COM SUCESSO!           ");
+        System.out.println("      ****************************************");
+        System.out.println("             __    __    __  __  __           ");
+        System.out.println("            /  \\  /  \\  /  \\/  \\/  \\         ");
+        System.out.println("           /    \\/    \\/  /  /\\/   \\ \\       ");
+        System.out.println("           |      |    |  /  |  |   \\         ");
+        System.out.println("           \\     /\\    | |   \\_/    |\\        ");
+        System.out.println("            \\__/  \\__|    |____/|___/|        ");
+        System.out.println("**********************************************");
+        System.out.println("Parabéns, você derrotou o Leviatã e venceu o jogo!");
+        System.out.println("**********************************************");
+
+        log.adicionarLog("Parabéns, você derrotou o Leviatã e venceu o jogo!");
+
+        System.exit(0);
 
         return false;
     }
-
-    public void jogarTurnoHeroiBatalhaBoss(Player heroi, Player monstro, ResultadoAtaque ra) {
-        // A lógica do turno do herói
-        System.out.println("\nTurno do herói: " + heroi.getNome());
-
-        // Realiza o ataque normal
-        log.adicionarLog("Resultado do ataque de " + heroi.getNome() + ": " + ra);
-
-        if(ra != ResultadoAtaque.ERROU) {
-            System.out.println("O monstro " + monstro.getNome() + " recebeu dano do herói " + heroi.getNome() + "\n");
-            log.adicionarLog("O monstro " + monstro.getNome() + " recebeu dano do herói " + heroi.getNome());
-        }
-    }
-
-    // FUNÇÕES DE HERÓI UNIVERSAIS
-    public void verificaDerrotaDoHeroi(Player player, Player opponent) {
-        if (opponent.getHp() <= 0) {
-            System.out.println("O herói " + opponent.getNome() + " foi derrotado pelo monstro " + player.getNome() + "!\n");
-            log.adicionarLog("O herói " + opponent.getNome() + " foi derrotado pelo monstro " + player.getNome() + "!");
-        }
-    }
-
+    
     public boolean heroisVivos(List<Hero> herois, boolean batalhaBoss) {
         for (Hero heroi : herois) {
             if (heroi.getHp() > 0) {

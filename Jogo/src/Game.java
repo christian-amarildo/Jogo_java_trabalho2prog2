@@ -2,7 +2,7 @@ import entities.Log;
 import entities.Player;
 import entities.heros.*;
 import entities.monsters.*;
-import exceptions.DificuldadeRangeException;
+import exceptions.DificuldadeOutOfRangeException;
 import utils.Cores;
 import utils.Dificuldade;
 
@@ -32,15 +32,18 @@ public class Game {
         switch (escolha) {
             case 1:
                 dificuldade = new Dificuldade("Fácil", 0.6f, 0.6f,  1);
+                System.out.println("Você escolheu a dificuldade: " + dificuldade.getNome());
                 break;
             case 2:
                 dificuldade = new Dificuldade("Médio", 1.0f, 1.0f,  2);
+                System.out.println("Você escolheu a dificuldade: " + dificuldade.getNome());
                 break;
             case 3:
                 dificuldade = new Dificuldade("Difícil", 1.15f, 1.15f,  3);
+                System.out.println("Você escolheu a dificuldade: " + dificuldade.getNome());
                 break;
             default:
-                throw new DificuldadeRangeException("Erro ao escolher a dificuldade. Escolha um número de (1) a (3).");
+                throw new DificuldadeOutOfRangeException("Erro ao escolher a dificuldade. Escolha um número de (1) a (3).");
         }
 
     }
@@ -103,8 +106,9 @@ public class Game {
         while (iterator.hasNext()) {
             Player heroi = iterator.next();
             if (heroi.getHp() <= 0) {
+                iterator.remove();
                 System.out.println(heroi.getNome() + " foi derrotado!");
-                iterator.remove(); // Remove o herói da lista
+                 // Remove o herói da lista
             }
         }
     }
@@ -117,15 +121,16 @@ public class Game {
             if (monstro.getHp() <= 0) {
                 // Quando o monstro for derrotado, realiza o drop de dinheiro
                 monstro.dropDinheiro();
+                iterator.remove();
                 System.out.println(monstro.getNome() + " foi derrotado!");
-                iterator.remove(); // Remove o monstro da lista
+                 // Remove o monstro da lista
             }
         }
     }
 
     private void exibirStatus() {
         System.out.println("\n" + Cores.AMARELO + "Status Atual:" + Cores.RESET);
-
+        removerHeroisMortos();
         // Exibir heróis restantes
         System.out.println(Cores.AZUL + "Heróis:" + Cores.RESET);
         for (Player heroi : herois) {
@@ -136,6 +141,7 @@ public class Game {
 
         // Remover monstros mortos da lista antes de exibir
         removerMonstrosMortos();
+
 
         // Exibir monstros restantes apenas se houver monstros vivos
         if (monstros.size() > 0) {
@@ -213,7 +219,7 @@ public class Game {
         boolean batalhaAtiva = true;
         while (batalhaAtiva) {
             // Decidindo os turnos:
-            turno.decidirturnoBatalhaBoss(herois, leviatan);
+            turno.decidirturnoBatalhaBoss(herois, monstros);
 
             // Exibe o status da batalha
             exibirStatus();
@@ -343,7 +349,7 @@ public class Game {
             catch (InputMismatchException e){
                 System.out.println(Cores.VERMELHO + "Erro na digitação da dificuldade. Digite um número inteiro." + Cores.RESET);
             }
-            catch (DificuldadeRangeException e){
+            catch (DificuldadeOutOfRangeException e){
                 System.out.println(Cores.VERMELHO + e.getMessage() + Cores.RESET);
             }
         }

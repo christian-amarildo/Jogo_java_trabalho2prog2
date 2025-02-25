@@ -6,7 +6,7 @@ import utils.Dificuldade;
 
 public class Leviatan extends Monster {
     public Leviatan(String nome, String tipo, Dificuldade dificuldade) {
-        super(nome, 250, 35, 15, 20, 15, tipo, 100, dificuldade); // Atributos ajustados
+        super(nome, 250, 35, 15, 20, 10, tipo, 100, dificuldade);
     }
 
     @Override

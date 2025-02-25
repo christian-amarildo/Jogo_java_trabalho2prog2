@@ -29,16 +29,18 @@ public abstract class Player {
     protected float velocidade;
     protected Log log;
 
-    public Player(String nome,  float hp,  float forcaAtaque,  float defesa,  float destreza,  float velocidade) {
+    // Construtor que inicializa os atributos
+    public Player(String nome, float hp, float forcaAtaque, float defesa, float destreza, float velocidade) {
         this.nome = nome;
         this.hp = hp;
         this.forcaAtaque = forcaAtaque;
         this.defesa = defesa;
         this.destreza = destreza;
         this.velocidade = velocidade;
+        this.log = new Log();  // Inicializa o log aqui
     }
 
-    // Método para definir o Log
+    // Método para definir o Log (se quiser configurar após a criação)
     public void setLog(Log log) {
         this.log = log;
     }
@@ -66,35 +68,48 @@ public abstract class Player {
         if (atacante instanceof Hero) {
             // O herói escolhe um monstro aleatório para atacar
             Player alvo = inimigos.get(random.nextInt(inimigos.size()));
-            System.out.println(atacante.getNome() + " (herói) decide atacar " + alvo.getNome());
+            String evento = atacante.getNome() + " (herói) decide atacar " + alvo.getNome();
+            System.out.println(evento);  // Exibe no terminal
+            log.adicionarLog(evento);  // Adiciona ao log
 
             if (atacante.realizarAtaque(alvo) == ResultadoAtaque.ACERTOU) {
-                System.out.println(Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET);
+                evento = Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
             } else if (atacante.realizarAtaque(alvo) == ResultadoAtaque.CRITICAL_HIT) {
-                System.out.println(Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET);
+                evento = Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
             } else {
-                System.out.println(Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET);
+                evento = Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
             }
-
 
         }
         // Se o atacante for um monstro
         else if (atacante instanceof Monster) {
             // O monstro escolhe um herói aleatório para atacar
             Player alvo = aliados.get(random.nextInt(aliados.size()));
-            System.out.println(atacante.getNome() + " (monstro) decide atacar " + alvo.getNome());
+            String evento = atacante.getNome() + " (monstro) decide atacar " + alvo.getNome();
+            System.out.println(evento);  // Exibe no terminal
+            log.adicionarLog(evento);  // Adiciona ao log
 
-            // provavel mudança:
             if (atacante.realizarAtaque(alvo) == ResultadoAtaque.ACERTOU) {
-                System.out.println(Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET);
+                evento = Cores.VERDE + atacante.getNome() + " acertou o ataque em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
             } else if (atacante.realizarAtaque(alvo) == ResultadoAtaque.CRITICAL_HIT) {
-                System.out.println(Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET);
+                evento = Cores.CYAN + atacante.getNome() + " acertou um ataque crítico em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
             } else {
-                System.out.println(Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET);
-            }// O monstro realiza o ataque
+                evento = Cores.VERMELHO + atacante.getNome() + " errou o ataque em " + alvo.getNome() + Cores.RESET;
+                System.out.println(evento);  // Exibe no terminal
+                log.adicionarLog(evento);  // Adiciona ao log
+            }
         }
     }
-
 
     // Método para obter a maior velocidade da lista de jogadores
     private float getMaiorVelocidade(List<Monster> players) {
