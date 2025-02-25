@@ -20,8 +20,8 @@ public class Esqueleto extends Monster {
             return ResultadoAtaque.ACERTOU;
         }
 
-        // Verifica se houve ataque crítico (exemplo: 20% de chance de crítico)
-        if (chanceAcerto > (100 - 20)) { // 20% de chance de crítico
+        // Verifica se houve ataque crítico
+        if (chanceAcerto > (70)) {
             float dano = Math.max(1, (this.forcaAtaque - alvo.getDefesa()) * 2); // Dano crítico
             alvo.receberDano(dano);
             return ResultadoAtaque.CRITICAL_HIT;

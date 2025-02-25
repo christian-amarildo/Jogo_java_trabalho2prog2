@@ -21,7 +21,7 @@ public class Slime extends Monster {
         }
 
         // Se houve ataque crítico
-        if (chanceAcerto > (100 - 20)) {  // 20% de chance de crítico
+        if (chanceAcerto > (60)) {
             float dano = Math.max(1, (this.forcaAtaque - alvo.getDefesa()) * 2); // Dano crítico
             alvo.receberDano(dano);
             return ResultadoAtaque.CRITICAL_HIT;

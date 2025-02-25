@@ -31,8 +31,8 @@ public abstract class Hero extends Player {
         }
 
         // Verifica se houve um crítico
-        if (chanceAcerto > 95) {
-            float dano = calcularDanoCritico(alvo);
+        if (chanceAcerto > 75) {
+            float dano = Math.max(1, (this.forcaAtaque - alvo.getDefesa()) * 2);
             alvo.receberDano(dano);
             return ResultadoAtaque.CRITICAL_HIT;
         }

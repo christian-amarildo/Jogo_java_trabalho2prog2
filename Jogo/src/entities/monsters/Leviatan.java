@@ -14,23 +14,19 @@ public class Leviatan extends Monster {
         double chanceAcerto = Math.random() * 100;
 
         // Se o ataque acertou
-        if (chanceAcerto <= 75) { // 75% de chance de acerto
-            float dano = this.forcaAtaque - alvo.getDefesa();
-            if (dano < 0) dano = 0; // Impede dano negativo
-
-            // Se houve dano crítico (exemplo: 20% de chance)
-            double chanceCritico = Math.random() * 100;
-            if (chanceCritico <= 20) { // 20% de chance de crítico
-                dano *= 2;
-                System.out.println(this.getNome() + " realizou um ataque CRÍTICO!");
-                return ResultadoAtaque.CRITICAL_HIT;
-            }
-
+        if (chanceAcerto <= this.destreza) {
+            float dano = Math.max(1, this.forcaAtaque - alvo.getDefesa());
             alvo.receberDano(dano);
             return ResultadoAtaque.ACERTOU;
         }
 
-        // Ataque errou
+        // Se houve ataque crítico
+        if (chanceAcerto > (80)) {
+            float dano = Math.max(1, (this.forcaAtaque - alvo.getDefesa()) * 2); // Dano crítico
+            alvo.receberDano(dano);
+            return ResultadoAtaque.CRITICAL_HIT;
+        }
+
         return ResultadoAtaque.ERROU;
     }
 }

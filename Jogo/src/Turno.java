@@ -91,7 +91,7 @@ public class Turno {
 
         return false;
     }
-    
+
     public boolean heroisVivos(List<Hero> herois, boolean batalhaBoss) {
         for (Hero heroi : herois) {
             if (heroi.getHp() > 0) {

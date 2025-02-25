@@ -53,8 +53,8 @@ public class Game {
 
         herois.add(new Guerreiro("Tharos", 150, 25, 10, 10, 8, "Guerreiro"));
         herois.add(new Mago("Elaria", 100, 10, 5, 15, 10, "Mago"));
-        herois.add(new Arqueiro("Lian", 120, 18, 5, 20, 12, "Arqueiro"));
-        herois.add(new Furtivo("Silas", 130, 20, 8, 25, 14, "Furtivo"));
+        herois.add(new Arqueiro("Lian", 120, 18, 5, 17, 12, "Arqueiro"));
+        herois.add(new Furtivo("Silas", 130, 20, 8, 20, 14, "Furtivo"));
 
         // Passar o log para cada herói
         for (Hero heroi : herois) {
