@@ -247,6 +247,18 @@ public class Game {
 
         // Inicializar monstros novamente antes de iniciar a batalha
         inicializarMonstros();
+        System.out.println("\nMonstros na Dungeon:");
+        for (Monster monstro : monstros) {
+            if (monstro.getHp() > 0) {
+                System.out.println("Nome: " + monstro.getNome());
+                System.out.println("  - Vida: " + monstro.getHp());
+                System.out.println("  - Força de Ataque: " + monstro.getForcaAtaque());
+                System.out.println("  - Defesa: " + monstro.getDefesa());
+                System.out.println("  - Destreza: " + monstro.getDestreza());
+                System.out.println("  - Velocidade: " + monstro.getVelocidade());
+                System.out.println("----------------------");
+            }
+        }
 
         // Iniciar o combate
         iniciarCombate();
