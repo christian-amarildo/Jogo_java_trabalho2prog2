@@ -47,13 +47,6 @@ public abstract class Hero extends Player {
         return dano;
     }
 
-    public float calcularDanoCritico(Player alvo) {
-        // O dano crítico é calculado da mesma forma, mas com um bônus multiplicador
-        float dano = (this.forcaAtaque - alvo.getDefesa()) * 2; // Dano crítico dobra
-        if (dano < 0) dano = 0; // Impede dano negativo
-        return dano;
-    }
-
     public static void curarTodosOsHerois(List<Hero> herois, int quantidade) {
         for (Hero heroi : herois) {
             heroi.curar(quantidade); // Cura cada herói
@@ -103,21 +96,6 @@ public abstract class Hero extends Player {
             this.hp += quantidade; // Aumenta a vida do herói
             System.out.println(this.nome + " recuperou " + quantidade + " de vida. Vida atual: " + this.hp);
         }
-    }
-
-    public void verificaHPEmBatalha() {
-        if (getHp() <= 0) {
-            System.out.println("\nVocê está sem HP, se recupere antes de lutar!");
-            setEmBatalha(false);
-        }
-    }
-
-    public String getClasse() {
-        return classe;
-    }
-
-    public boolean getEmBatalha() {
-        return this.emBatalha;
     }
 
     public void setEmBatalha(boolean emBatalha) {

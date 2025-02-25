@@ -19,10 +19,6 @@ public abstract class Monster extends Player {
         this.dificuldade = dificuldade;
     }
 
-    public int getDinheiroDropado() {
-        return dinheiroDropado;
-    }
-
     @Override
     public ResultadoAtaque realizarAtaque(Player alvo) {
         // Lógica de ataque do monstro
