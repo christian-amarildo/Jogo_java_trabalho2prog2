@@ -98,7 +98,4 @@ public abstract class Hero extends Player {
         }
     }
 
-    public void setEmBatalha(boolean emBatalha) {
-        this.emBatalha = emBatalha;
-    }
 }

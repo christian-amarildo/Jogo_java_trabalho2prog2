@@ -10,7 +10,7 @@ public class Esqueleto extends Monster {
     }
 
     @Override
-    public ResultadoAtaque realizarAtaque(Player alvo) {
+    public ResultadoAtaque realizarAtaque(Player alvo){
         double chanceAcerto = Math.random() * 100;
 
         // Verifica se o ataque acertou baseado na destreza

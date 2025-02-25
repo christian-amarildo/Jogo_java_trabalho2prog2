@@ -22,18 +22,6 @@ public class Dificuldade {
         this.nivelDificuldade = nivelDificuldade;
     }
 
-    // Método para ajustar os parâmetros dos monstros com base na dificuldade
-    // (Atualmente comentado, mas pode ser usado para modificar os monstros)
-    // public void ajustarParametros(List<entities.monsters.Monster> monstros) {
-    //     // Itera sobre a lista de monstros
-    //     for (entities.monsters.Monster monstro : monstros) {
-    //         // Aumenta o dano do monstro multiplicando pelo fator de dano
-    //         monstro.setForcaAtaque((int) (monstro.getForcaAtaque() * fatorDano));
-    //         // Aumenta a defesa do monstro multiplicando pelo fator de resistência
-    //         monstro.setDefesa((int) (monstro.getDefesa() * fatorResistencia));
-    //     }
-    // }
-
     // Método getter para obter o nome da dificuldade
     public String getNome() { return nome; }
 

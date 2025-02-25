@@ -15,14 +15,11 @@ public class Game {
     private List<Monster> monstros = new ArrayList<>();
     private Log log;
     private Turno turno = new Turno();
-    private InterfaceUsuario ui;
     private Dificuldade dificuldade;
-    private Inventario inventario;
+
 
     public Game() {
         log = new Log();
-        ui = new InterfaceUsuario();
-        inventario = new Inventario();
     }
 
     public void escolherDificuldade() throws InputMismatchException {
@@ -81,7 +78,6 @@ public class Game {
             }
         }
     }
-
 
     public void iniciarCombate() {
         boolean batalhaAtiva = true;
@@ -159,8 +155,6 @@ public class Game {
         // Registrar no log o status atual da batalha
         log.adicionarLog("Status atual - Heróis restantes: " + herois.size() + ", Monstros restantes: " + monstros.size());
     }
-
-
 
     public void interagir() throws InputMismatchException{
         Scanner scanner = new Scanner(System.in);
@@ -267,7 +261,6 @@ public class Game {
         regenerarVidaMonstros();
     }
 
-
     public void regenerarVidaMonstros() {
         // Itera sobre a lista de monstros e regenera a vida
         for (Monster monstro : monstros) {
@@ -342,7 +335,6 @@ public class Game {
                 System.out.println("Opção inválida. Tente novamente.");
         }
     }
-
 
     public static void main(String[] args) {
 
