@@ -345,4 +345,4 @@ classDiagram
 ## 🎓 Licença
 Distribuído sob licença MIT. Veja [LICENSE](LICENSE) para detalhes.
 
-Desenvolvido com ☕ por [Seu Nome]
+Desenvolvido com ☕ por Christian amarildo, Daniel naiff, Rogério, Luiz
